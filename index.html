@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
       overflow-x: hidden;
       animation: fadeInBody 1.5s ease;
@@ -17,8 +17,8 @@
 
     header {
       text-align: center;
-      padding: 60px 20px 30px;
-      background: linear-gradient(to bottom right, #ff6a00, #ee0979);
+      padding: 70px 20px 40px;
+      background: linear-gradient(135deg, #1d2671, #c33764);
       animation: slideDown 1.5s ease;
     }
 
@@ -36,31 +36,74 @@
     }
 
     .download-btn {
-      margin-top: 20px;
-      display: inline-block;
-      background: #34d058;
+      margin-top: 25px;
+      display: inline-flex;
+      align-items: center;
+      background: #00c853;
       color: #fff;
       padding: 12px 25px;
-      border-radius: 30px;
+      border-radius: 50px;
       font-weight: bold;
+      font-size: 1.1em;
       text-decoration: none;
       transition: background 0.3s, transform 0.3s;
       animation: fadeIn 2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .download-btn img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
     }
 
     .download-btn:hover {
-      background: #28a745;
+      background: #00b248;
       transform: scale(1.05);
+    }
+
+    .rating {
+      margin-top: 15px;
+      font-size: 1.1em;
+      opacity: 0.9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn 2.2s ease;
+    }
+
+    .rating img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      gap: 40px;
+      font-size: 1.2em;
+      animation: fadeIn 2.5s ease;
+    }
+
+    .stat-item {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
     }
 
     .screenshots-container {
       overflow-x: auto;
       white-space: nowrap;
       padding: 30px 10px;
-      margin: 50px 0;
+      margin: 60px 0;
+      background: #1b2735;
+      color: #fff;
       scroll-behavior: smooth;
-      background: #f0f0f0;
-      color: #000;
     }
 
     .screenshots-container::-webkit-scrollbar {
@@ -68,7 +111,7 @@
     }
 
     .screenshots-container::-webkit-scrollbar-thumb {
-      background: #0072ff;
+      background: #00c6ff;
       border-radius: 10px;
     }
 
@@ -84,15 +127,15 @@
     }
 
     .screenshots-container img:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     }
 
     .info {
       text-align: center;
       padding: 50px 20px;
-      background: linear-gradient(to right, #00f2fe, #4facfe);
-      color: #000;
+      background: linear-gradient(to right, #11998e, #38ef7d);
+      color: #fff;
       font-size: 1.2em;
     }
 
@@ -154,7 +197,24 @@
 <header>
   <h1>BitVelo</h1>
   <p>Realtime Internet Data Monitor</p>
-  <a class="download-btn" href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank">Download from Play Store</a>
+  <a class="download-btn" href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store Icon">
+    Download on Play Store
+  </a>
+  
+  <div class="rating">
+    <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" alt="Star">
+    4.6/5 Rating
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <strong>700K+</strong><br>Total Downloads
+    </div>
+    <div class="stat-item">
+      <strong>16K+</strong><br>Daily Active Users
+    </div>
+  </div>
 </header>
 
 <section class="screenshots-container">
@@ -175,7 +235,6 @@
     <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email" onclick="contactEmail()">
     <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram" onclick="openTelegram()">
     <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram" onclick="openInstagram()">
-    <img src="https://img.icons8.com/color/48/000000/domain.png" alt="Website" onclick="openWebsite()">
   </div>
 </footer>
 
@@ -190,10 +249,6 @@ function openTelegram() {
 
 function openInstagram() {
   window.open("https://instagram.com/yourprofile", "_blank");
-}
-
-function openWebsite() {
-  window.open("https://yourwebsite.com", "_blank");
 }
 </script>
 
