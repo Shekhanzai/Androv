@@ -4,39 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BitVelo - Realtime Internet Data Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #6a11cb, #2575fc);
       color: #fff;
       overflow-x: hidden;
+      animation: fadeInBody 1.5s ease;
     }
 
     header {
       text-align: center;
-      padding: 40px 20px 20px;
-      background: rgba(0,0,0,0.2);
+      padding: 60px 20px 30px;
+      background: linear-gradient(to bottom right, #ff6a00, #ee0979);
+      animation: slideDown 1.5s ease;
     }
 
     header h1 {
       font-size: 3em;
       margin: 0;
-      animation: fadeInDown 1s ease forwards;
+      animation: popUp 1s ease;
     }
 
     header p {
       margin-top: 10px;
-      font-size: 1.2em;
-      animation: fadeInDown 1.5s ease forwards;
+      font-size: 1.3em;
+      opacity: 0.9;
+      animation: popUp 1.5s ease;
+    }
+
+    .download-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background: #34d058;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+      animation: fadeIn 2s ease;
+    }
+
+    .download-btn:hover {
+      background: #28a745;
+      transform: scale(1.05);
     }
 
     .screenshots-container {
       overflow-x: auto;
       white-space: nowrap;
       padding: 30px 10px;
-      margin: 30px 0;
+      margin: 50px 0;
       scroll-behavior: smooth;
+      background: #f0f0f0;
+      color: #000;
     }
 
     .screenshots-container::-webkit-scrollbar {
@@ -44,7 +68,7 @@
     }
 
     .screenshots-container::-webkit-scrollbar-thumb {
-      background: #00c6ff;
+      background: #0072ff;
       border-radius: 10px;
     }
 
@@ -53,26 +77,33 @@
       max-width: 250px;
       margin: 0 15px;
       border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       transition: transform 0.4s, box-shadow 0.4s;
+      background: white;
+      padding: 5px;
     }
 
     .screenshots-container img:hover {
       transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     }
 
     .info {
       text-align: center;
-      margin: 40px 20px;
+      padding: 50px 20px;
+      background: linear-gradient(to right, #00f2fe, #4facfe);
+      color: #000;
       font-size: 1.2em;
-      animation: fadeIn 2s ease forwards;
+    }
+
+    .info h2 {
+      margin-bottom: 20px;
     }
 
     footer {
       text-align: center;
-      padding: 30px 20px;
-      background: rgba(0, 0, 0, 0.2);
+      padding: 40px 20px;
+      background: linear-gradient(to right, #7b2ff7, #f107a3);
       font-size: 1em;
       margin-top: 40px;
     }
@@ -86,6 +117,9 @@
       margin: 0 12px;
       cursor: pointer;
       transition: transform 0.3s, opacity 0.3s;
+      border-radius: 50%;
+      background: white;
+      padding: 5px;
     }
 
     .social-icons img:hover {
@@ -94,16 +128,25 @@
     }
 
     /* Animations */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popUp {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
   </style>
 </head>
 
@@ -111,6 +154,7 @@
 <header>
   <h1>BitVelo</h1>
   <p>Realtime Internet Data Monitor</p>
+  <a class="download-btn" href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank">Download from Play Store</a>
 </header>
 
 <section class="screenshots-container">
@@ -128,10 +172,10 @@
 <footer>
   <p>Developed by AFG Developer</p>
   <div class="social-icons">
-    <img src="icons/email.png" alt="Email" onclick="contactEmail()">
-    <img src="icons/telegram.png" alt="Telegram" onclick="openTelegram()">
-    <img src="icons/instagram.png" alt="Instagram" onclick="openInstagram()">
-    <img src="icons/website.png" alt="Website" onclick="openWebsite()">
+    <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email" onclick="contactEmail()">
+    <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram" onclick="openTelegram()">
+    <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram" onclick="openInstagram()">
+    <img src="https://img.icons8.com/color/48/000000/domain.png" alt="Website" onclick="openWebsite()">
   </div>
 </footer>
 
@@ -141,7 +185,7 @@ function contactEmail() {
 }
 
 function openTelegram() {
-  window.open("https://t.me/yourtelegram", "_blank");
+  window.open("https://t.me/yourtelegramusername", "_blank");
 }
 
 function openInstagram() {
