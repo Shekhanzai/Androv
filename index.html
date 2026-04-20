@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BitVelo - Internet Speed & Data Monitor</title>
-  <meta name="description" content="Monitor real-time network speed, per-app data usage, and track network history.">
+  <meta name="description" content="Monitor real-time network speed, per-app data usage, and track network history. Block apps, set limits, and take full control of your internet.">
   <link rel="icon" type="image/png" href="icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #020617;
+      /* Refined Professional Color Palette */
+      --bg-dark: #050814;
+      --accent-primary: #38bdf8; /* Vibrant Sky Blue */
+      --accent-secondary: #818cf8; /* Soft Indigo */
+      --accent-glow: rgba(56, 189, 248, 0.4);
       --card-bg: rgba(15, 23, 42, 0.6);
-      --primary: #38bdf8;
-      --secondary: #818cf8;
-      --accent: #2dd4bf;
       --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.1);
+      --text-dim: #94a3b8;
     }
 
     * {
@@ -27,13 +27,13 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg-color);
+      background: var(--bg-dark);
       color: var(--text-main);
       overflow-x: hidden;
-      line-height: 1.6;
+      position: relative;
     }
 
-    /* Subtle Background Elements */
+    /* Background Elements */
     .matrix-bg {
       position: fixed;
       top: 0;
@@ -41,15 +41,16 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.05;
+      opacity: 0.08;
     }
 
     .matrix-column {
       position: absolute;
       top: -100%;
-      font-size: 14px;
-      color: var(--primary);
+      font-size: 20px;
+      color: var(--accent-primary);
       animation: matrixFall linear infinite;
+      font-family: 'Courier New', monospace;
     }
 
     @keyframes matrixFall { to { top: 100%; } }
@@ -57,261 +58,265 @@
     .orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
+      filter: blur(100px);
+      opacity: 0.2;
+      animation: orbFloat 25s infinite ease-in-out;
       z-index: -1;
-      animation: orbFloat 20s infinite ease-in-out;
     }
-    .orb-1 { width: 500px; height: 500px; background: var(--primary); top: -10%; left: -10%; }
-    .orb-2 { width: 400px; height: 400px; background: var(--secondary); bottom: -10%; right: -10%; }
+
+    .orb-1 { width: 600px; height: 600px; background: var(--accent-primary); top: -300px; left: -300px; }
+    .orb-2 { width: 500px; height: 500px; background: var(--accent-secondary); bottom: -250px; right: -250px; animation-delay: 8s; }
 
     @keyframes orbFloat {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(30px, 30px) scale(1.1); }
+      50% { transform: translate(100px, 150px) scale(1.1); }
     }
 
-    /* Header & Hero */
     header {
-      padding: 120px 20px 80px;
+      position: relative;
       text-align: center;
-      max-width: 1000px;
-      margin: 0 auto;
+      padding: 100px 20px 60px;
+      perspective: 1000px;
     }
 
     .app-icon {
-      width: 100px;
-      height: 100px;
-      border-radius: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      width: 120px;
+      height: 120px;
+      border-radius: 30px;
+      margin: 0 auto 30px;
+      display: block;
+      box-shadow: 0 20px 60px var(--accent-glow);
+      border: 2px solid rgba(255,255,255,0.1);
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
     }
 
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
+      display: inline-block;
       background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 6px 16px;
-      border-radius: 100px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-size: 0.85em;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 30px;
+      letter-spacing: 1px;
     }
 
     .logo-3d {
-      font-size: clamp(3rem, 8vw, 5rem);
-      font-weight: 800;
-      background: linear-gradient(to right, #fff, var(--primary));
+      font-size: 5.5em;
+      font-weight: 900;
+      background: linear-gradient(to bottom, #fff, var(--accent-primary));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
       letter-spacing: -2px;
+      margin-bottom: 20px;
     }
 
     .hero-subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: var(--text-main);
-      margin-bottom: 16px;
+      font-size: 1.8em;
       font-weight: 600;
+      margin: 20px auto;
+      max-width: 800px;
+      color: #fff;
     }
 
     .hero-description {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      max-width: 650px;
-      margin: 0 auto 40px;
+      font-size: 1.1em;
+      color: var(--text-dim);
+      max-width: 700px;
+      margin: 20px auto 40px;
+      line-height: 1.8;
     }
 
-    /* Redesigned Play Store Button */
-    .play-store-btn {
+    /* MODERN PLAY STORE BUTTON */
+    .cta-wrapper {
+      margin-top: 50px;
+    }
+
+    .google-play-btn {
       display: inline-flex;
       align-items: center;
       background: #000;
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 12px;
-      text-decoration: none;
       border: 1px solid #333;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 12px 28px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
-    .play-store-btn:hover {
-      background: #111;
-      transform: translateY(-3px);
-      border-color: var(--primary);
+    .google-play-btn:hover {
+      transform: translateY(-5px);
+      background: #0a0a0a;
+      border-color: var(--accent-primary);
       box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
     }
 
-    .play-store-btn img {
+    .google-play-btn svg {
       width: 32px;
       height: 32px;
       margin-right: 12px;
     }
 
-    .btn-text {
+    .play-text {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      text-align: left;
       line-height: 1.2;
     }
 
-    .btn-label {
-      font-size: 0.7rem;
+    .play-get-it {
+      font-size: 10px;
       text-transform: uppercase;
-      opacity: 0.8;
-      letter-spacing: 1px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
-    .btn-main {
-      font-size: 1.2rem;
+    .play-store-name {
+      font-size: 20px;
       font-weight: 700;
     }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 30px;
+      border-radius: 50px;
+      margin-top: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .star { color: #fbbf24; font-size: 1.2em; }
 
     /* Stats Section */
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
       max-width: 1100px;
-      margin: 40px auto;
+      margin: 80px auto;
       padding: 0 20px;
     }
 
     .stat-card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 35px;
+      border-radius: 25px;
       text-align: center;
-      backdrop-filter: blur(10px);
     }
 
     .stat-number {
-      font-size: 2.5rem;
+      font-size: 2.8em;
       font-weight: 800;
-      color: var(--primary);
-      display: block;
+      color: var(--accent-primary);
+      margin: 10px 0;
     }
 
-    .stat-label {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .stat-label { color: var(--text-dim); text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; }
 
-    /* Features Grid */
-    .section-title {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 50px;
-      font-weight: 800;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 40px;
-      border-radius: 24px;
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover {
-      border-color: var(--primary);
-      background: rgba(56, 189, 248, 0.05);
-      transform: translateY(-5px);
-    }
-
-    .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .feature-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-
-    .feature-card p {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    /* Speed Meter Custom UI */
+    /* Live Demo */
+    .live-demo { padding: 100px 20px; text-align: center; }
+    .section-title { font-size: 3.5em; font-weight: 800; margin-bottom: 20px; }
+    
     .speed-monitor {
-      background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
-      border: 1px solid var(--primary);
-      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      background: #0f172a;
+      border: 1px solid var(--accent-primary);
       border-radius: 30px;
-      max-width: 800px;
-      margin: 60px auto;
-      text-align: center;
+      padding: 50px;
       box-shadow: 0 0 50px rgba(56, 189, 248, 0.1);
     }
 
     .speed-value {
-      font-size: 4rem;
+      font-size: 3.5em;
       font-weight: 800;
-      color: var(--primary);
-      font-variant-numeric: tabular-nums;
+      color: var(--accent-primary);
     }
 
-    /* Footer Styles */
-    footer {
-      margin-top: 100px;
-      padding: 80px 20px;
-      background: #010409;
-      border-top: 1px solid var(--border);
+    .signal-bar { width: 15px; background: var(--accent-primary); border-radius: 5px; opacity: 0.5; }
+
+    /* Features */
+    .features { padding: 100px 20px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
     }
 
-    .developer-card {
-      background: rgba(255, 255, 255, 0.03);
+    .feature-card {
+      background: var(--card-bg);
       padding: 40px;
-      border-radius: 30px;
-      max-width: 600px;
-      margin: 0 auto 60px;
-      text-align: center;
-      border: 1px solid var(--border);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: 0.3s;
     }
 
-    .developer-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid var(--primary);
-      margin-bottom: 15px;
-    }
+    .feature-card:hover { border-color: var(--accent-primary); background: rgba(56, 189, 248, 0.05); }
+    .feature-icon { font-size: 3em; margin-bottom: 20px; display: block; }
+    .feature-card h3 { font-size: 1.5em; margin-bottom: 15px; color: var(--accent-primary); }
+    .feature-card p { color: var(--text-dim); line-height: 1.7; }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
+    /* Screenshots Section */
+    .screenshots-section { padding: 100px 20px; overflow: hidden; }
+    .carousel-3d-wrapper { height: 600px; perspective: 2000px; display: flex; justify-content: center; align-items: center; }
+    .carousel-track { position: relative; width: 300px; height: 600px; transform-style: preserve-3d; animation: rotate3D 30s linear infinite; }
+    .screenshot-card { position: absolute; width: 300px; height: 600px; border-radius: 20px; overflow: hidden; border: 2px solid var(--accent-primary); background: #000; }
+    .screenshot-card img { width: 100%; height: 100%; object-fit: cover; }
+    
+    @keyframes rotate3D { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+    
+    .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(450px); }
+    .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(450px); }
+    .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(450px); }
+    .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(450px); }
 
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* Timeline Section */
+    .timeline { max-width: 1000px; margin: 60px auto; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: var(--accent-primary); transform: translateX(-50%); opacity: 0.3; }
+    .timeline-item { display: flex; margin-bottom: 50px; position: relative; }
+    .timeline-content { width: 45%; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+    .timeline-item:nth-child(odd) { justify-content: flex-start; }
+    .timeline-item:nth-child(even) { justify-content: flex-end; }
+    .timeline-dot { position: absolute; left: 50%; top: 20px; width: 20px; height: 20px; background: var(--accent-primary); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 20px var(--accent-primary); }
+
+    /* VPN Info */
+    .vpn-info { max-width: 900px; margin: 50px auto; padding: 40px; background: rgba(251, 191, 36, 0.05); border: 1px solid #fbbf24; border-radius: 25px; }
+    .vpn-info h3 { color: #fbbf24; margin-bottom: 10px; }
+
+    /* Footer & Developer */
+    footer { padding: 100px 20px; background: #010409; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .developer-card { max-width: 600px; margin: 0 auto 60px; background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
+    .developer-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent-primary); margin-bottom: 20px; }
+    .developer-name { font-size: 1.8em; font-weight: 700; color: #fff; }
+    
+    .social-icon { width: 60px; height: 60px; background: #111; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 10px; transition: 0.3s; cursor: pointer; border: 1px solid #333; }
+    .social-icon:hover { border-color: var(--accent-primary); transform: translateY(-5px); }
+    .social-icon img { width: 30px; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
-      header { padding: 80px 20px 40px; }
-      .logo-3d { font-size: 3rem; }
-      .features-grid { grid-template-columns: 1fr; }
+      .logo-3d { font-size: 3.5em; }
+      .timeline::before { left: 20px; }
+      .timeline-dot { left: 20px; }
+      .timeline-content { width: 85%; margin-left: 50px; }
+      .timeline-item:nth-child(even) { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -323,144 +328,178 @@
 <div class="orb orb-2"></div>
 
 <header>
-  <img src="https://cdn-icons-png.flaticon.com/512/3050/3050215.png" alt="BitVelo Icon" class="app-icon">
-  
-  <div>
-    <span class="hero-badge">✨ NEW UPDATE AVAILABLE</span>
+  <img src="icon.png" alt="App Icon" class="app-icon">
+  <div class="hero-badge">🚀 #1 INTERNET MONITOR</div>
+  <h1 class="logo-3d">BitVelo</h1>
+  <p class="hero-subtitle">Monitor Speed & Data Usage in Real-Time</p>
+  <p class="hero-description">Experience full control of your network with BitVelo. Track per-app usage, set daily limits, and see live speeds in your status bar.</p>
+
+  <div class="cta-wrapper">
+    <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="google-play-btn" target="_blank">
+        <svg viewBox="0 0 512 512">
+            <path fill="#4db6ac" d="M12 52.12v407.76c0 15.11 11.59 23.01 23.32 23.01 4.54 0 9.17-1.18 13.41-3.61l355.74-203.88c11.01-6.31 17.53-17.51 17.53-30.4s-6.52-24.09-17.53-30.4L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01z"/>
+            <path fill="#000" opacity=".1" d="M12 52.12v407.76c0 5.48 1.52 10.19 4.22 13.91l247.78-217.79L12 52.12z"/>
+            <path fill="#fff" opacity=".1" d="M411.07 225.12L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01 0 1.25.09 2.48.25 3.69.83-13.1 11.48-19.7 23.07-19.7 4.54 0 9.17 1.18 13.41 3.61l362.34 207.65c5.5 3.15 8.76 8.75 8.76 15.2s-3.26 12.05-8.76 15.2l-5.4 3.09c5.5-3.15 8.76-8.75 8.76-15.2s-3.26-12.05-8.76-15.2z"/>
+        </svg>
+        <div class="play-text">
+            <span class="play-get-it">Get it on</span>
+            <span class="play-store-name">Google Play</span>
+        </div>
+    </a>
   </div>
 
-  <h1 class="logo-3d">BitVelo</h1>
-
-  <p class="hero-subtitle">The Smarter Way to Track Data</p>
-
-  <p class="hero-description">
-    Real-time speed monitoring, per-app tracking, and network history. Take full control of your mobile data usage with one powerful, lightweight tool.
-  </p>
-
-  <a class="play-store-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store">
-    <div class="btn-text">
-      <span class="btn-label">Get it on</span>
-      <span class="btn-main">Google Play</span>
-    </div>
-  </a>
+  <div class="rating-badge">
+    <div class="stars">★★★★★</div>
+    <span style="font-weight: 700;">4.6/5 Rating</span>
+  </div>
 </header>
 
 <section class="stats reveal">
   <div class="stat-card">
-    <span class="stat-number">700K+</span>
-    <span class="stat-label">Downloads</span>
+    <div class="stat-number" data-target="700000">0</div>
+    <div class="stat-label">Downloads</div>
   </div>
   <div class="stat-card">
-    <span class="stat-number">4.6</span>
-    <span class="stat-label">Rating</span>
+    <div class="stat-number" data-target="16000">0</div>
+    <div class="stat-label">Active Users</div>
   </div>
   <div class="stat-card">
-    <span class="stat-number">100%</span>
-    <span class="stat-label">Secure</span>
+    <div class="stat-number" data-target="4.6">0</div>
+    <div class="stat-label">Avg Rating</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" data-target="150">0</div>
+    <div class="stat-label">Countries</div>
   </div>
 </section>
 
-<section class="reveal">
+<section class="live-demo reveal">
+  <h2 class="section-title">⚡ Live Performance</h2>
   <div class="speed-monitor">
-    <p class="stat-label" style="margin-bottom: 10px;">Live Speed Test</p>
     <div class="speed-value" id="downloadSpeed">0.0</div>
-    <p style="color: var(--text-muted); margin-bottom: 20px;">Mbps Download</p>
-    <div style="display: flex; justify-content: center; gap: 30px;">
-      <div>
-        <div style="font-weight: bold; color: var(--secondary);" id="uploadSpeed">0.0</div>
-        <div class="stat-label" style="font-size: 0.7rem;">Upload</div>
-      </div>
-      <div>
-        <div style="font-weight: bold; color: var(--accent);" id="pingValue">24</div>
-        <div class="stat-label" style="font-size: 0.7rem;">Ping</div>
-      </div>
+    <p class="stat-label">Mbps Download</p>
+    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
+        <div><div id="uploadSpeed" style="color: #fff; font-weight: bold;">0.0</div><div class="stat-label">Upload</div></div>
+        <div><div id="ping" style="color: #fff; font-weight: bold;">0</div><div class="stat-label">Ping</div></div>
     </div>
   </div>
 </section>
 
-<section class="reveal">
-  <h2 class="section-title">Why BitVelo?</h2>
+<section class="features reveal" id="features">
+  <h2 class="section-title" style="text-align: center;">🎯 Powerful Features</h2>
   <div class="features-grid">
-    <div class="feature-card">
-      <span class="feature-icon">🚀</span>
-      <h3>Real-Time Monitor</h3>
-      <p>Always visible download and upload speeds in your status bar or floating window.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📱</span>
-      <h3>Per-App Tracking</h3>
-      <p>Identify which apps are draining your data in real-time. Block them with one tap.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📊</span>
-      <h3>Usage Analytics</h3>
-      <p>Beautifully crafted charts showing your daily, weekly, and monthly data consumption.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔒</span>
-      <h3>Privacy Focus</h3>
-      <p>We use on-device VPN processing. Your data never leaves your phone.</p>
-    </div>
+    <div class="feature-card"><span class="feature-icon">📊</span><h3>Real-Time Speed</h3><p>Monitor live download & upload speed on your status bar.</p></div>
+    <div class="feature-card"><span class="feature-icon">📱</span><h3>Per-App Tracking</h3><p>See exactly how much data each app uses in real-time.</p></div>
+    <div class="feature-card"><span class="feature-icon">📈</span><h3>Usage History</h3><p>Analyze daily and monthly data usage with detailed charts.</p></div>
+    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Floating Window</h3><p>Overlay current speeds over any app you are using.</p></div>
+    <div class="feature-card"><span class="feature-icon">🚫</span><h3>App Blocking</h3><p>Block background internet usage for specific apps.</p></div>
+    <div class="feature-card"><span class="feature-icon">⚙️</span><h3>Daily Limits</h3><p>Set data caps and get notified before you exceed them.</p></div>
+    <div class="feature-card"><span class="feature-icon">📶</span><h3>All Networks</h3><p>Works with WiFi, 4G, 5G and all mobile connections.</p></div>
+    <div class="feature-card"><span class="feature-icon">🔍</span><h3>Bandwidth Detective</h3><p>Find hidden apps eating your data in the background.</p></div>
+    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Lightweight</h3><p>Optimized for minimal battery and RAM consumption.</p></div>
   </div>
+</section>
+
+<section class="screenshots-section reveal" id="screenshots">
+    <h2 class="section-title" style="text-align: center;">📸 App Preview</h2>
+    <div class="carousel-3d-wrapper">
+      <div class="carousel-track">
+        <div class="screenshot-card"><img src="screenshots/0.png" alt="Screen 1"></div>
+        <div class="screenshot-card"><img src="screenshots/1.png" alt="Screen 2"></div>
+        <div class="screenshot-card"><img src="screenshots/2.png" alt="Screen 3"></div>
+        <div class="screenshot-card"><img src="screenshots/3.png" alt="Screen 4"></div>
+      </div>
+    </div>
+</section>
+
+<section class="how-it-works reveal" id="how-it-works">
+    <h2 class="section-title" style="text-align: center;">🔧 Setup Process</h2>
+    <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>01. Install</h3><p>Get BitVelo from the Google Play Store for free.</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>02. Permission</h3><p>Grant VPN access for on-device traffic monitoring.</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>03. Configure</h3><p>Set your data limits and select apps to track.</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>04. Monitor</h3><p>View your live speeds and usage history instantly.</p></div></div>
+    </div>
+</section>
+
+<section class="reveal">
+    <div class="vpn-info">
+      <h3>🔒 Privacy Information</h3>
+      <p>BitVelo uses Android VPNService to route traffic locally. No data is ever sent to external servers. All processing is done strictly on your device.</p>
+    </div>
 </section>
 
 <footer>
   <div class="developer-card reveal">
-    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mohammad" alt="Developer" class="developer-avatar">
-    <h3 style="margin-bottom: 5px;">Mohammad Azizi</h3>
-    <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 15px;">Lead Developer</p>
-    <p style="color: var(--text-muted);">Crafting high-performance Android tools to help you master your digital life.</p>
+    <img src="developer.jpg" alt="Developer" class="developer-avatar">
+    <div class="developer-name">Mohammad Azizi</div>
+    <p style="color: var(--accent-primary); margin-bottom: 10px;">UI/UX Designer & Android Dev</p>
+    <p style="color: var(--text-dim); padding: 0 20px;">Dedicated to building lightweight tools that give users full transparency over their mobile devices.</p>
   </div>
 
-  <div style="text-align: center; opacity: 0.5; font-size: 0.9rem;">
-    <p>© 2024 BitVelo App. All rights reserved.</p>
+  <div class="social-icons">
+    <div class="social-icon" onclick="window.location.href='mailto:mazizi7171@gmail.com'"><img src="https://img.icons8.com/fluency/48/000000/email-open.png"></div>
+    <div class="social-icon" onclick="window.open('https://t.me/Azizi_1231')"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></div>
+    <div class="social-icon" onclick="window.open('https://instagram.com/mohammad876886')"><img src="https://img.icons8.com/color/48/000000/instagram-new.png"></div>
   </div>
+  <p style="margin-top: 40px; opacity: 0.5;">© 2024 BitVelo • Created by Mohammad Azizi</p>
 </footer>
 
 <script>
-  // Matrix Background
-  function createMatrix() {
-    const matrix = document.getElementById('matrix');
-    const columns = Math.floor(window.innerWidth / 20);
-    for (let i = 0; i < columns; i++) {
-      const col = document.createElement('div');
-      col.className = 'matrix-column';
-      col.style.left = (i * 20) + 'px';
-      col.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      col.style.animationDelay = Math.random() * 2 + 's';
-      col.innerText = Math.random() > 0.5 ? '1' : '0';
-      matrix.appendChild(col);
-    }
+function createMatrix() {
+  const matrix = document.getElementById('matrix');
+  for (let i = 0; i < 30; i++) {
+    const column = document.createElement('div');
+    column.className = 'matrix-column';
+    column.style.left = Math.random() * 100 + '%';
+    column.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    column.innerText = '0101010101010101010101010';
+    matrix.appendChild(column);
   }
+}
 
-  // Live Speed Simulation
-  function simulateSpeed() {
-    setInterval(() => {
-      document.getElementById('downloadSpeed').innerText = (Math.random() * 50 + 10).toFixed(1);
-      document.getElementById('uploadSpeed').innerText = (Math.random() * 20 + 5).toFixed(1);
-      document.getElementById('pingValue').innerText = Math.floor(Math.random() * 30 + 10);
-    }, 2000);
-  }
+function animateSpeed() {
+  setInterval(() => {
+    document.getElementById('downloadSpeed').textContent = (Math.random() * 80 + 20).toFixed(1);
+    document.getElementById('uploadSpeed').textContent = (Math.random() * 40 + 5).toFixed(1);
+    document.getElementById('ping').textContent = Math.floor(Math.random() * 40 + 10);
+  }, 2000);
+}
 
-  // Scroll Reveal
-  function reveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(el => {
-      const windowHeight = window.innerHeight;
-      const elementTop = el.getBoundingClientRect().top;
-      if (elementTop < windowHeight - 100) {
-        el.classList.add('active');
+function animateCounters() {
+  const counters = document.querySelectorAll('.stat-number');
+  counters.forEach(counter => {
+    const target = parseFloat(counter.getAttribute('data-target'));
+    const increment = target / 50;
+    let current = 0;
+    const update = () => {
+      if (current < target) {
+        current += increment;
+        counter.textContent = Math.floor(current).toLocaleString() + (target > 1000 ? '+' : '');
+        setTimeout(update, 30);
+      } else {
+        counter.textContent = target.toLocaleString() + (target > 1000 ? '+' : '');
       }
-    });
-  }
-
-  window.addEventListener('scroll', reveal);
-  window.addEventListener('load', () => {
-    createMatrix();
-    simulateSpeed();
-    reveal();
+    };
+    update();
   });
+}
+
+function reveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => {
+    const elementTop = el.getBoundingClientRect().top;
+    if (elementTop < window.innerHeight - 100) el.classList.add('active');
+  });
+}
+
+window.addEventListener('scroll', reveal);
+window.addEventListener('load', () => {
+  createMatrix();
+  animateSpeed();
+  animateCounters();
+  reveal();
+});
 </script>
 
 </body>
