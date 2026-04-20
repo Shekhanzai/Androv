@@ -3,387 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BitVelo - Master Your Network</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
+  <title>BitVelo - Ultimate Internet Speed & Data Monitor</title>
+  <meta name="description" content="Monitor real-time network speed, per-app data usage, and track network history. Block apps, set limits, and take full control of your internet.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #00f5ff;
-      --secondary: #7000ff;
-      --accent: #ff007a;
-      --bg: #030712;
-      --glass: rgba(255, 255, 255, 0.03);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg);
+      background: #0a0e27;
       color: #fff;
       overflow-x: hidden;
-      scroll-behavior: smooth;
+      position: relative;
     }
 
-    /* --- SHOCKING BACKGROUND: NETWORK PULSE --- */
-    #canvas-container {
+    /* Animated Matrix Background */
+    .matrix-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
-    }
-
-    .network-line {
-      position: absolute;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      height: 1px;
-      width: 100px;
-      opacity: 0.3;
-      animation: moveLine 3s linear infinite;
-    }
-
-    @keyframes moveLine {
-      0% { transform: translateX(-100vw) translateY(0); opacity: 0; }
-      50% { opacity: 0.5; }
-      100% { transform: translateX(100vw) translateY(100px); opacity: 0; }
-    }
-
-    /* --- HERO SECTION --- */
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      perspective: 1000px;
-    }
-
-    .hero-tag {
-      background: var(--glass);
-      border: 1px solid var(--primary);
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.8em;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      color: var(--primary);
-      box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
-    }
-
-    .glitch-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(3rem, 10vw, 6rem);
-      font-weight: 900;
-      line-height: 1;
-      background: linear-gradient(to bottom, #fff 30%, var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-    }
-
-    .floating-window-mockup {
-      position: absolute;
-      width: 180px;
-      height: 60px;
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--primary);
-      border-radius: 12px;
-      top: 20%;
-      right: 15%;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 10px;
-      font-family: monospace;
-      animation: floatUI 4s ease-in-out infinite;
-      box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
-    }
-
-    @keyframes floatUI {
-      0%, 100% { transform: translateY(0) rotate(2deg); }
-      50% { transform: translateY(-20px) rotate(-2deg); }
-    }
-
-    /* --- LIVE STATS BAR --- */
-    .live-ticker {
-      display: flex;
-      gap: 50px;
-      margin-top: 40px;
-      background: var(--glass);
-      padding: 20px 40px;
-      border-radius: 100px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .ticker-item span { display: block; font-size: 0.7em; opacity: 0.6; text-transform: uppercase; }
-    .ticker-item strong { font-size: 1.4em; color: var(--primary); }
-
-    /* --- THE GRID OF POWER (FEATURES) --- */
-    .section-title {
-      text-align: center;
-      font-size: 3em;
-      margin: 100px 0 50px;
-      font-family: 'Space Grotesk';
-    }
-
-    .features-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 30px;
-      padding: 0 50px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .feature-card {
-      background: var(--glass);
-      border: 1px solid rgba(255,255,255,0.05);
-      padding: 40px;
-      border-radius: 30px;
-      position: relative;
       overflow: hidden;
-      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0.1;
     }
 
-    .feature-card:hover {
-      transform: translateY(-15px) scale(1.02);
-      border-color: var(--primary);
-      background: rgba(0, 245, 255, 0.03);
+    .matrix-column {
+      position: absolute;
+      top: -100%;
+      font-size: 20px;
+      color: #00ff88;
+      animation: matrixFall linear infinite;
+      font-family: 'Courier New', monospace;
     }
 
-    .feature-card i {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      display: block;
+    @keyframes matrixFall {
+      to {
+        top: 100%;
+      }
     }
 
-    .feature-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-      color: var(--primary);
+    /* Glowing Orbs Background */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      animation: orbFloat 25s infinite ease-in-out;
+      z-index: -1;
     }
 
-    /* --- VPN/BLOCKER HIGHLIGHT --- */
-    .vpn-section {
-      margin: 100px 50px;
-      background: linear-gradient(135deg, #0f172a, #1e1b4b);
-      border-radius: 40px;
-      padding: 80px;
-      display: flex;
-      align-items: center;
-      gap: 50px;
-      border: 1px solid var(--secondary);
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(45deg, #00f5ff, #0080ff);
+      top: -300px;
+      left: -300px;
+    }
+
+    .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(45deg, #ff00ff, #ff0080);
+      bottom: -250px;
+      right: -250px;
+      animation-delay: 8s;
+    }
+
+    .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(45deg, #00ff88, #00ffff);
+      top: 40%;
+      left: 60%;
+      animation-delay: 16s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(100px, -100px) scale(1.2); }
+      50% { transform: translate(-50px, 150px) scale(0.8); }
+      75% { transform: translate(150px, 50px) scale(1.1); }
+    }
+
+    /* Hero Section */
+    header {
       position: relative;
+      text-align: center;
+      padding: 100px 20px 60px;
+      perspective: 1000px;
+      overflow: hidden;
     }
 
-    .vpn-content { flex: 1; }
-    .vpn-visual {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
-
-    .shield-icon {
-      font-size: 10rem;
-      filter: drop-shadow(0 0 30px var(--secondary));
-      animation: pulseShield 3s infinite;
-    }
-
-    @keyframes pulseShield {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-
-    /* --- DOWNLOAD BUTTON --- */
-    .btn-cyber {
-      position: relative;
-      padding: 20px 50px;
-      background: var(--primary);
-      color: #000;
-      text-decoration: none;
-      font-weight: 900;
-      border-radius: 5px;
-      text-transform: uppercase;
-      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-      transition: 0.3s;
+    .hero-badge {
       display: inline-block;
-      margin-top: 30px;
-    }
-
-    .btn-cyber:hover {
-      transform: skewX(-5deg);
-      box-shadow: -5px 0 var(--accent), 5px 0 var(--secondary);
+      background: linear-gradient(90deg, rgba(0, 245, 255, 0.2), rgba(255, 0, 255, 0.2));
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-size: 0.9em;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      animation: fadeInDown 1s ease;
       letter-spacing: 2px;
     }
 
-    /* --- APP USAGE MOCKUP --- */
-    .usage-list {
-      background: rgba(0,0,0,0.5);
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .usage-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .bar-container {
-      width: 100%;
-      height: 4px;
-      background: #333;
-      margin-top: 5px;
-      border-radius: 2px;
-    }
-
-    .bar-fill {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-    /* --- MOBILE RESPONSIVE --- */
-    @media (max-width: 768px) {
-      .vpn-section { flex-direction: column; padding: 40px 20px; text-align: center; }
-      .live-ticker { flex-direction: column; gap: 20px; border-radius: 20px; }
-      .floating-window-mockup { display: none; }
-      .features-container { padding: 0 20px; }
-    }
-  </style>
-</head>
-<body>
-
-<div id="canvas-container"></div>
-
-<header>
-  <div class="hero-tag">Android VPN-Powered Firewall</div>
-  <h1 class="glitch-title">BitVelo</h1>
-  <p style="max-width: 600px; font-size: 1.2em; opacity: 0.8;">
-    The ultimate Command Center for your mobile data. Monitor speeds, track per-app usage, and block bandwidth hogs in real-time.
-  </p>
-  
-  <div class="floating-window-mockup">
-    <div style="color:var(--primary)">↑ 1.2 MB/s</div>
-    <div style="color:var(--accent)">↓ 8.5 MB/s</div>
-  </div>
-
-  <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="btn-cyber">Download on Play Store</a>
-
-  <div class="live-ticker">
-    <div class="ticker-item"><span>Total Downloads</span><strong>700K+</strong></div>
-    <div class="ticker-item"><span>Active Users</span><strong>16K+</strong></div>
-    <div class="ticker-item"><span>User Rating</span><strong>4.6/5 ★</strong></div>
-  </div>
-</header>
-
-<h2 class="section-title">Why BitVelo?</h2>
-
-<div class="features-container">
-  <!-- Feature 1 -->
-  <div class="feature-card">
-    <i>🛰️</i>
-    <h3>Real-time Speed Monitor</h3>
-    <p>Live upload & download speeds in your status bar and a customizable floating window. Always know your speed.</p>
-  </div>
-
-  <!-- Feature 2 -->
-  <div class="feature-card">
-    <i>📱</i>
-    <h3>Per-App Tracking</h3>
-    <p>Identity exactly which app is stealing your bandwidth. See real-time consumption for every individual app.</p>
-    <div class="usage-list">
-      <div class="usage-item"><span>YouTube</span><span>1.2 GB</span></div>
-      <div class="bar-container"><div class="bar-fill" style="width: 80%"></div></div>
-      <div class="usage-item"><span>Instagram</span><span>450 MB</span></div>
-      <div class="bar-container"><div class="bar-fill" style="width: 30%"></div></div>
-    </div>
-  </div>
-
-  <!-- Feature 3 -->
-  <div class="feature-card">
-    <i>📅</i>
-    <h3>Usage History</h3>
-    <p>Detailed daily, weekly, and monthly logs. Set daily limits to avoid expensive data overages.</p>
-  </div>
-</div>
-
-<!-- VPN SECTION -->
-<section class="vpn-section">
-  <div class="vpn-content">
-    <h2 style="font-size: 2.5em; margin-bottom: 20px;">The App Blocker</h2>
-    <p style="font-size: 1.1em; opacity: 0.8; margin-bottom: 20px;">
-      Using advanced <strong>Android VPNService</strong>, BitVelo allows you to block specific apps from accessing the internet. 
-      <br><br>
-      Stop background data drain, enhance your privacy, and save battery by filtering traffic directly on your device. No external servers, pure local control.
-    </p>
-    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-left: 4px solid var(--secondary); font-size: 0.9em;">
-      Note: On-device VPN ensures your data stays private and never leaves your phone.
-    </div>
-  </div>
-  <div class="vpn-visual">
-    <div class="shield-icon">🛡️</div>
-  </div>
-</section>
-
-<!-- SCREENSHOTS (3D CAROUSEL) -->
-<section style="padding: 100px 0; overflow: hidden;">
-    <h2 class="section-title">Interface Design</h2>
-    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <img src="screenshots/0.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="screenshots/1.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="screenshots/2.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    </div>
-</section>
-
-<footer style="padding: 100px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
-  <h3>Developed by Mohammad</h3>
-  <p style="opacity: 0.5; margin-top: 10px;">Full Network Transparency & Control</p>
-  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
-    <img src="https://img.icons8.com/color/48/000000/telegram-app.png" style="cursor:pointer" onclick="window.open('https://t.me/Azizi_1231')">
-    <img src="https://img.icons8.com/color/48/000000/instagram-new.png" style="cursor:pointer" onclick="window.open('https://instagram.com/mohammad876886')">
-  </div>
-</footer>
-
-<script>
-  // Dynamic Network Lines background
-  const container = document.getElementById('canvas-container');
-  function createLine() {
-    const line = document.createElement('div');
-    line.className = 'network-line';
-    line.style.top = Math.random() * 100 + 'vh';
-    line.style.left = '-100px';
-    line.style.animationDuration = (Math.random() * 3 + 2) + 's';
-    container.appendChild(line);
-    setTimeout(() => line.remove(), 5000);
-  }
-  setInterval(createLine, 300);
-
-  // Intersection Observer for scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
       }
-    });
-  });
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  document.querySelectorAll('.feature-card, .vpn-section').forEach(el => {
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(50px)';
-    el.style.transition = '1s ease-out';
-    observer.observe(el);
-  });
-</script>
+    .logo-3d {
+      font-size: 5.5em;
+      font-weight: 900;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff88, #00f5ff);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite, float3D 3s ease-in-out infinite;
+      text-shadow: 0 0 80px rgba(0, 245, 255, 0.5);
+      letter-spacing: 8px;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
 
-</body>
-</html>
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0px) rotateX(0deg); }
+      50% { transform: translateY(-20px) rotateX(5deg); }
+    }
+
+    .hero-subtitle {
+      font-size: 1.8em;
+      font-weight: 300;
+      margin: 20px auto;
+      max-width: 800px;
+      line-height: 1.5;
+      animation: fadeInUp 1s 0.3s 
