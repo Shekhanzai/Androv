@@ -3,875 +3,386 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BitVelo - Realtime Internet Data Monitor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <title>BitVelo - Master Your Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary: #00f5ff;
+      --secondary: #7000ff;
+      --accent: #ff007a;
+      --bg: #030712;
+      --glass: rgba(255, 255, 255, 0.03);
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
-      background: #0a0e27;
+      background-color: var(--bg);
       color: #fff;
       overflow-x: hidden;
-      position: relative;
+      scroll-behavior: smooth;
     }
 
-    /* Animated Background Particles */
-    .particle-container {
+    /* --- SHOCKING BACKGROUND: NETWORK PULSE --- */
+    #canvas-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
     }
 
-    .particle {
+    .network-line {
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(0, 255, 255, 0.6);
-      border-radius: 50%;
-      animation: float 15s infinite;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      height: 1px;
+      width: 100px;
+      opacity: 0.3;
+      animation: moveLine 3s linear infinite;
     }
 
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) translateX(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) translateX(100px);
-        opacity: 0;
-      }
+    @keyframes moveLine {
+      0% { transform: translateX(-100vw) translateY(0); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: translateX(100vw) translateY(100px); opacity: 0; }
     }
 
-    /* Glowing Orbs Background */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      animation: orbFloat 20s infinite ease-in-out;
-      z-index: -1;
-    }
-
-    .orb-1 {
-      width: 500px;
-      height: 500px;
-      background: linear-gradient(45deg, #ff006e, #8338ec);
-      top: -250px;
-      left: -250px;
-      animation-delay: 0s;
-    }
-
-    .orb-2 {
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(45deg, #3a86ff, #06ffa5);
-      bottom: -200px;
-      right: -200px;
-      animation-delay: 5s;
-    }
-
-    .orb-3 {
-      width: 350px;
-      height: 350px;
-      background: linear-gradient(45deg, #ffbe0b, #fb5607);
-      top: 50%;
-      left: 50%;
-      animation-delay: 10s;
-    }
-
-    @keyframes orbFloat {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      33% {
-        transform: translate(100px, -100px) scale(1.1);
-      }
-      66% {
-        transform: translate(-100px, 100px) scale(0.9);
-      }
-    }
-
-    /* Header Section with 3D Effect */
+    /* --- HERO SECTION --- */
     header {
-      position: relative;
-      text-align: center;
-      padding: 120px 20px 80px;
-      perspective: 1000px;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      transform-style: preserve-3d;
-      animation: heroEntry 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes heroEntry {
-      from {
-        opacity: 0;
-        transform: translateY(-100px) rotateX(90deg);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) rotateX(0);
-      }
-    }
-
-    .logo-3d {
-      font-size: 5em;
-      font-weight: 900;
-      background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff88);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 3s ease infinite, float3D 3s ease-in-out infinite;
-      text-shadow: 0 10px 30px rgba(0, 245, 255, 0.5);
-      letter-spacing: 5px;
-      position: relative;
-      display: inline-block;
-    }
-
-    .logo-3d::before {
-      content: 'BitVelo';
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      background: linear-gradient(45deg, #ff00ff, #00f5ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: blur(20px);
-      opacity: 0.7;
-    }
-
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes float3D {
-      0%, 100% {
-        transform: translateY(0px) rotateX(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotateX(5deg);
-      }
-    }
-
-    .subtitle {
-      font-size: 1.5em;
-      font-weight: 300;
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeInUp 1s 0.5s forwards;
-      letter-spacing: 2px;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Futuristic Download Button */
-    .download-wrapper {
-      margin-top: 50px;
-      opacity: 0;
-      animation: fadeInUp 1s 1s forwards;
-    }
-
-    .download-btn {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 15px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #fff;
-      padding: 18px 45px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1.2em;
-      text-decoration: none;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-      transition: all 0.4s ease;
-      border: 2px solid transparent;
-    }
-
-    .download-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .download-btn:hover::before {
-      left: 100%;
-    }
-
-    .download-btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
-      border-color: #00f5ff;
-    }
-
-    .download-btn img {
-      width: 32px;
-      height: 32px;
-      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    /* Glassmorphism Stats Cards */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 0 20px;
-      opacity: 0;
-      animation: fadeInUp 1s 1.5s forwards;
-    }
-
-    .stat-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transform: rotate(45deg);
-      transition: all 0.6s;
-    }
-
-    .stat-card:hover::before {
-      top: -100%;
-      left: -100%;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
-      border-color: rgba(0, 245, 255, 0.5);
-    }
-
-    .stat-icon {
-      font-size: 3em;
-      margin-bottom: 15px;
-      animation: rotateIcon 3s infinite ease-in-out;
-    }
-
-    @keyframes rotateIcon {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(10deg) scale(1.1); }
-    }
-
-    .stat-number {
-      font-size: 2.5em;
-      font-weight: 900;
-      background: linear-gradient(45deg, #00f5ff, #ff00ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .stat-label {
-      margin-top: 10px;
-      font-size: 1em;
-      opacity: 0.8;
-      font-weight: 300;
-    }
-
-    /* 3D Carousel Screenshots */
-    .screenshots-section {
-      padding: 100px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .screenshots-section h2 {
-      text-align: center;
-      font-size: 3em;
-      margin-bottom: 60px;
-      background: linear-gradient(45deg, #00f5ff, #ff00ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: fadeInUp 1s forwards;
-    }
-
-    .carousel-3d {
-      position: relative;
-      height: 500px;
-      perspective: 1500px;
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      perspective: 1000px;
     }
 
-    .carousel-track {
-      position: relative;
-      width: 300px;
-      height: 550px;
-      transform-style: preserve-3d;
-      animation: rotate3D 25s linear infinite;
+    .hero-tag {
+      background: var(--glass);
+      border: 1px solid var(--primary);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
     }
 
-    @keyframes rotate3D {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+    .glitch-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(to bottom, #fff 30%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
 
-    .carousel-track:hover {
-      animation-play-state: paused;
-    }
-
-    .screenshot-card {
+    .floating-window-mockup {
       position: absolute;
-      width: 280px;
-      height: 550px;
-      left: 10px;
-      top: 0;
-      background: #fff;
-      border-radius: 25px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transition: all 0.5s;
+      width: 180px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--primary);
+      border-radius: 12px;
+      top: 20%;
+      right: 15%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+      font-family: monospace;
+      animation: floatUI 4s ease-in-out infinite;
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
     }
 
-    .screenshot-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    @keyframes floatUI {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50% { transform: translateY(-20px) rotate(-2deg); }
     }
 
-    .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(400px); }
-    .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(400px); }
-    .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(400px); }
-    .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(400px); }
-
-    .screenshot-card:hover {
-      transform: scale(1.1) !important;
-      box-shadow: 0 30px 80px rgba(0, 245, 255, 0.6);
+    /* --- LIVE STATS BAR --- */
+    .live-ticker {
+      display: flex;
+      gap: 50px;
+      margin-top: 40px;
+      background: var(--glass);
+      padding: 20px 40px;
+      border-radius: 100px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Features with Hover Effects */
-    .features {
-      padding: 100px 20px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    }
+    .ticker-item span { display: block; font-size: 0.7em; opacity: 0.6; text-transform: uppercase; }
+    .ticker-item strong { font-size: 1.4em; color: var(--primary); }
 
-    .features h2 {
+    /* --- THE GRID OF POWER (FEATURES) --- */
+    .section-title {
       text-align: center;
       font-size: 3em;
-      margin-bottom: 60px;
-      background: linear-gradient(45deg, #00f5ff, #ff00ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin: 100px 0 50px;
+      font-family: 'Space Grotesk';
     }
 
-    .features-grid {
+    .features-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      max-width: 1200px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 0 50px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
     .feature-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.05);
       padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 30px;
       position: relative;
       overflow: hidden;
-      cursor: pointer;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(255, 0, 255, 0.1));
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    .feature-card:hover::before {
-      opacity: 1;
+      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .feature-card:hover {
-      transform: translateY(-20px) rotateX(10deg);
-      box-shadow: 0 30px 80px rgba(0, 245, 255, 0.4);
-      border-color: rgba(0, 245, 255, 0.5);
+      transform: translateY(-15px) scale(1.02);
+      border-color: var(--primary);
+      background: rgba(0, 245, 255, 0.03);
     }
 
-    .feature-icon {
-      font-size: 4em;
+    .feature-card i {
+      font-size: 3rem;
       margin-bottom: 20px;
-      display: inline-block;
-      transition: all 0.5s;
-      filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.5));
-    }
-
-    .feature-card:hover .feature-icon {
-      transform: scale(1.2) rotate(10deg);
-      filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
+      display: block;
     }
 
     .feature-card h3 {
-      font-size: 1.5em;
+      font-size: 1.5rem;
       margin-bottom: 15px;
-      color: #00f5ff;
+      color: var(--primary);
     }
 
-    .feature-card p {
-      opacity: 0.8;
-      line-height: 1.6;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 100px 20px;
-      text-align: center;
+    /* --- VPN/BLOCKER HIGHLIGHT --- */
+    .vpn-section {
+      margin: 100px 50px;
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      border-radius: 40px;
+      padding: 80px;
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      border: 1px solid var(--secondary);
       position: relative;
-      overflow: hidden;
     }
 
-    .cta-content {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .cta-content h2 {
-      font-size: 3.5em;
-      margin-bottom: 30px;
-      animation: glow 2s infinite alternate;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 20px rgba(0, 245, 255, 0.5), 0 0 30px rgba(0, 245, 255, 0.3);
-      }
-      to {
-        text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.5);
-      }
-    }
-
-    .cta-content p {
-      font-size: 1.3em;
-      margin-bottom: 40px;
-      opacity: 0.9;
-    }
-
-    /* Footer */
-    footer {
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .social-icons {
+    .vpn-content { flex: 1; }
+    .vpn-visual {
+      flex: 1;
       display: flex;
       justify-content: center;
-      gap: 30px;
+      position: relative;
+    }
+
+    .shield-icon {
+      font-size: 10rem;
+      filter: drop-shadow(0 0 30px var(--secondary));
+      animation: pulseShield 3s infinite;
+    }
+
+    @keyframes pulseShield {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* --- DOWNLOAD BUTTON --- */
+    .btn-cyber {
+      position: relative;
+      padding: 20px 50px;
+      background: var(--primary);
+      color: #000;
+      text-decoration: none;
+      font-weight: 900;
+      border-radius: 5px;
+      text-transform: uppercase;
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+      transition: 0.3s;
+      display: inline-block;
       margin-top: 30px;
     }
 
-    .social-icon {
-      width: 60px;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
+    .btn-cyber:hover {
+      transform: skewX(-5deg);
+      box-shadow: -5px 0 var(--accent), 5px 0 var(--secondary);
+      letter-spacing: 2px;
+    }
+
+    /* --- APP USAGE MOCKUP --- */
+    .usage-list {
+      background: rgba(0,0,0,0.5);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .usage-item {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .social-icon::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #00f5ff, #ff00ff);
-      transform: translate(-50%, -50%);
-      transition: all 0.5s;
-    }
-
-    .social-icon:hover::before {
+    .bar-container {
       width: 100%;
+      height: 4px;
+      background: #333;
+      margin-top: 5px;
+      border-radius: 2px;
+    }
+
+    .bar-fill {
       height: 100%;
+      background: var(--primary);
+      border-radius: 2px;
     }
 
-    .social-icon img {
-      width: 30px;
-      height: 30px;
-      position: relative;
-      z-index: 2;
-      transition: all 0.4s;
-    }
-
-    .social-icon:hover {
-      transform: translateY(-10px) scale(1.1);
-      border-color: #00f5ff;
-      box-shadow: 0 10px 30px rgba(0, 245, 255, 0.5);
-    }
-
-    .social-icon:hover img {
-      transform: rotate(360deg);
-      filter: brightness(1.3);
-    }
-
-    /* Rating Badge */
-    .rating-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 15px 30px;
-      border-radius: 50px;
-      margin-top: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      animation: fadeInUp 1s 1.2s forwards;
-      opacity: 0;
-    }
-
-    .stars {
-      display: flex;
-      gap: 5px;
-    }
-
-    .star {
-      color: #ffd700;
-      font-size: 1.2em;
-      animation: starPulse 2s infinite;
-    }
-
-    .star:nth-child(1) { animation-delay: 0s; }
-    .star:nth-child(2) { animation-delay: 0.2s; }
-    .star:nth-child(3) { animation-delay: 0.4s; }
-    .star:nth-child(4) { animation-delay: 0.6s; }
-    .star:nth-child(5) { animation-delay: 0.8s; }
-
-    @keyframes starPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); filter: drop-shadow(0 0 5px #ffd700); }
-    }
-
-    /* Responsive */
+    /* --- MOBILE RESPONSIVE --- */
     @media (max-width: 768px) {
-      .logo-3d {
-        font-size: 3em;
-      }
-
-      .subtitle {
-        font-size: 1.2em;
-      }
-
-      .stat-number {
-        font-size: 2em;
-      }
-
-      .carousel-3d {
-        height: 400px;
-      }
-
-      .carousel-track {
-        width: 200px;
-        height: 400px;
-      }
-
-      .screenshot-card {
-        width: 180px;
-        height: 400px;
-      }
-
-      .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
-      .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(250px); }
-      .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(250px); }
-      .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(250px); }
-
-      .cta-content h2 {
-        font-size: 2em;
-      }
-
-      .features h2,
-      .screenshots-section h2 {
-        font-size: 2em;
-      }
-    }
-
-    /* Scroll Reveal Animation */
-    .reveal {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s ease;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+      .vpn-section { flex-direction: column; padding: 40px 20px; text-align: center; }
+      .live-ticker { flex-direction: column; gap: 20px; border-radius: 20px; }
+      .floating-window-mockup { display: none; }
+      .features-container { padding: 0 20px; }
     }
   </style>
 </head>
-
 <body>
 
-<!-- Animated Background -->
-<div class="particle-container" id="particles"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<div id="canvas-container"></div>
 
-<!-- Header -->
 <header>
-  <div class="hero-content">
-    <h1 class="logo-3d">BitVelo</h1>
-    <p class="subtitle">⚡ Realtime Internet Speed Monitor</p>
-    
-    <div class="download-wrapper">
-      <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store">
-        <span>Download Now</span>
-      </a>
-    </div>
+  <div class="hero-tag">Android VPN-Powered Firewall</div>
+  <h1 class="glitch-title">BitVelo</h1>
+  <p style="max-width: 600px; font-size: 1.2em; opacity: 0.8;">
+    The ultimate Command Center for your mobile data. Monitor speeds, track per-app usage, and block bandwidth hogs in real-time.
+  </p>
+  
+  <div class="floating-window-mockup">
+    <div style="color:var(--primary)">↑ 1.2 MB/s</div>
+    <div style="color:var(--accent)">↓ 8.5 MB/s</div>
+  </div>
 
-    <div class="rating-badge">
-      <div class="stars">
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-      </div>
-      <span style="font-weight: 700; font-size: 1.1em;">4.6/5</span>
-    </div>
+  <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="btn-cyber">Download on Play Store</a>
+
+  <div class="live-ticker">
+    <div class="ticker-item"><span>Total Downloads</span><strong>700K+</strong></div>
+    <div class="ticker-item"><span>Active Users</span><strong>16K+</strong></div>
+    <div class="ticker-item"><span>User Rating</span><strong>4.6/5 ★</strong></div>
   </div>
 </header>
 
-<!-- Stats -->
-<section class="stats">
-  <div class="stat-card">
-    <div class="stat-icon">📥</div>
-    <div class="stat-number">700K+</div>
-    <div class="stat-label">Total Downloads</div>
+<h2 class="section-title">Why BitVelo?</h2>
+
+<div class="features-container">
+  <!-- Feature 1 -->
+  <div class="feature-card">
+    <i>🛰️</i>
+    <h3>Real-time Speed Monitor</h3>
+    <p>Live upload & download speeds in your status bar and a customizable floating window. Always know your speed.</p>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">👥</div>
-    <div class="stat-number">16K+</div>
-    <div class="stat-label">Daily Active Users</div>
+
+  <!-- Feature 2 -->
+  <div class="feature-card">
+    <i>📱</i>
+    <h3>Per-App Tracking</h3>
+    <p>Identity exactly which app is stealing your bandwidth. See real-time consumption for every individual app.</p>
+    <div class="usage-list">
+      <div class="usage-item"><span>YouTube</span><span>1.2 GB</span></div>
+      <div class="bar-container"><div class="bar-fill" style="width: 80%"></div></div>
+      <div class="usage-item"><span>Instagram</span><span>450 MB</span></div>
+      <div class="bar-container"><div class="bar-fill" style="width: 30%"></div></div>
+    </div>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">⭐</div>
-    <div class="stat-number">4.6</div>
-    <div class="stat-label">Average Rating</div>
+
+  <!-- Feature 3 -->
+  <div class="feature-card">
+    <i>📅</i>
+    <h3>Usage History</h3>
+    <p>Detailed daily, weekly, and monthly logs. Set daily limits to avoid expensive data overages.</p>
+  </div>
+</div>
+
+<!-- VPN SECTION -->
+<section class="vpn-section">
+  <div class="vpn-content">
+    <h2 style="font-size: 2.5em; margin-bottom: 20px;">The App Blocker</h2>
+    <p style="font-size: 1.1em; opacity: 0.8; margin-bottom: 20px;">
+      Using advanced <strong>Android VPNService</strong>, BitVelo allows you to block specific apps from accessing the internet. 
+      <br><br>
+      Stop background data drain, enhance your privacy, and save battery by filtering traffic directly on your device. No external servers, pure local control.
+    </p>
+    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-left: 4px solid var(--secondary); font-size: 0.9em;">
+      Note: On-device VPN ensures your data stays private and never leaves your phone.
+    </div>
+  </div>
+  <div class="vpn-visual">
+    <div class="shield-icon">🛡️</div>
   </div>
 </section>
 
-<!-- 3D Screenshots Carousel -->
-<section class="screenshots-section reveal">
-  <h2>📱 Experience BitVelo</h2>
-  <div class="carousel-3d">
-    <div class="carousel-track">
-      <div class="screenshot-card">
-        <img src="screenshots/0.png" alt="Screenshot 1">
-      </div>
-      <div class="screenshot-card">
-        <img src="screenshots/1.png" alt="Screenshot 2">
-      </div>
-      <div class="screenshot-card">
-        <img src="screenshots/2.png" alt="Screenshot 3">
-      </div>
-      <div class="screenshot-card">
-        <img src="screenshots/3.png" alt="Screenshot 4">
-      </div>
+<!-- SCREENSHOTS (3D CAROUSEL) -->
+<section style="padding: 100px 0; overflow: hidden;">
+    <h2 class="section-title">Interface Design</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <img src="screenshots/0.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="screenshots/1.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="screenshots/2.png" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
     </div>
-  </div>
-  <p style="text-align: center; margin-top: 30px; opacity: 0.7;">Hover to pause rotation</p>
 </section>
 
-<!-- Features -->
-<section class="features reveal">
-  <h2>🚀 Powerful Features</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Real-Time Monitoring</h3>
-      <p>Track your internet speed with live updates and beautiful visualizations</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💾</div>
-      <h3>Data Usage Tracker</h3>
-      <p>Monitor daily, weekly, and monthly data consumption effortlessly</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎨</div>
-      <h3>Beautiful UI</h3>
-      <p>Clean, modern, and intuitive interface designed for ease of use</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <h3>Lightweight & Fast</h3>
-      <p>Minimal battery and resource usage for optimal performance</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📈</div>
-      <h3>Detailed Analytics</h3>
-      <p>Get comprehensive insights with charts and graphs</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔔</div>
-      <h3>Smart Notifications</h3>
-      <p>Stay informed with customizable alerts and warnings</p>
-    </div>
+<footer style="padding: 100px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+  <h3>Developed by Mohammad</h3>
+  <p style="opacity: 0.5; margin-top: 10px;">Full Network Transparency & Control</p>
+  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+    <img src="https://img.icons8.com/color/48/000000/telegram-app.png" style="cursor:pointer" onclick="window.open('https://t.me/Azizi_1231')">
+    <img src="https://img.icons8.com/color/48/000000/instagram-new.png" style="cursor:pointer" onclick="window.open('https://instagram.com/mohammad876886')">
   </div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta-section reveal">
-  <div class="cta-content">
-    <h2>Ready to Take Control?</h2>
-    <p>Join thousands of users who trust BitVelo for monitoring their internet speed</p>
-    <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
-      <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store">
-      <span>Get Started Free</span>
-    </a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <p style="font-size: 1.2em; margin-bottom: 10px;">Developed with ❤️ by <strong>Mohammad</strong></p>
-  <p style="opacity: 0.7;">Making internet monitoring simple and beautiful</p>
-  
-  <div class="social-icons">
-    <div class="social-icon" onclick="contactEmail()">
-      <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email">
-    </div>
-    <div class="social-icon" onclick="openTelegram()">
-      <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram">
-    </div>
-    <div class="social-icon" onclick="openInstagram()">
-      <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram">
-    </div>
-  </div>
-
-  <p style="margin-top: 40px; opacity: 0.5; font-size: 0.9em;">© 2024 BitVelo. All rights reserved.</p>
 </footer>
 
 <script>
-// Create floating particles
-function createParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 50; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 15 + 's';
-    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-    container.appendChild(particle);
+  // Dynamic Network Lines background
+  const container = document.getElementById('canvas-container');
+  function createLine() {
+    const line = document.createElement('div');
+    line.className = 'network-line';
+    line.style.top = Math.random() * 100 + 'vh';
+    line.style.left = '-100px';
+    line.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    container.appendChild(line);
+    setTimeout(() => line.remove(), 5000);
   }
-}
+  setInterval(createLine, 300);
 
-// Scroll reveal animation
-function reveal() {
-  const reveals = document.querySelectorAll('.reveal');
-  reveals.forEach(element => {
-    const windowHeight = window.innerHeight;
-    const elementTop = element.getBoundingClientRect().top;
-    const elementVisible = 150;
-    
-    if (elementTop < windowHeight - elementVisible) {
-      element.classList.add('active');
-    }
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
   });
-}
 
-// Social Functions
-function contactEmail() {
-  window.location.href = "mailto:mazizi7171@gmail.com";
-}
-
-function openTelegram() {
-  window.open("https://t.me/Azizi_1231", "_blank");
-}
-
-function openInstagram() {
-  window.open("https://instagram.com/mohammad876886", "_blank");
-}
-
-// Initialize
-window.addEventListener('load', createParticles);
-window.addEventListener('scroll', reveal);
-reveal(); // Initial check
+  document.querySelectorAll('.feature-card, .vpn-section').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(50px)';
+    el.style.transition = '1s ease-out';
+    observer.observe(el);
+  });
 </script>
 
 </body>
