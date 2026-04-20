@@ -6,19 +6,8 @@
   <title>BitVelo - Internet Speed & Data Monitor</title>
   <meta name="description" content="Monitor real-time network speed, per-app data usage, and track network history. Block apps, set limits, and take full control of your internet.">
   <link rel="icon" type="image/png" href="icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      /* Refined Professional Color Palette */
-      --bg-dark: #050814;
-      --accent-primary: #38bdf8; /* Vibrant Sky Blue */
-      --accent-secondary: #818cf8; /* Soft Indigo */
-      --accent-glow: rgba(56, 189, 248, 0.4);
-      --card-bg: rgba(15, 23, 42, 0.6);
-      --text-main: #f8fafc;
-      --text-dim: #94a3b8;
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -26,14 +15,13 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      background: #020617; 
+      color: #fff;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Background Elements */
     .matrix-bg {
       position: fixed;
       top: 0;
@@ -41,14 +29,15 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.08;
+      overflow: hidden;
+      opacity: 0.1;
     }
 
     .matrix-column {
       position: absolute;
       top: -100%;
       font-size: 20px;
-      color: var(--accent-primary);
+      color: #38bdf8; 
       animation: matrixFall linear infinite;
       font-family: 'Courier New', monospace;
     }
@@ -64,12 +53,12 @@
       z-index: -1;
     }
 
-    .orb-1 { width: 600px; height: 600px; background: var(--accent-primary); top: -300px; left: -300px; }
-    .orb-2 { width: 500px; height: 500px; background: var(--accent-secondary); bottom: -250px; right: -250px; animation-delay: 8s; }
+    .orb-1 { width: 600px; height: 600px; background: linear-gradient(45deg, #0ea5e9, #6366f1); top: -300px; left: -300px; }
+    .orb-2 { width: 500px; height: 500px; background: linear-gradient(45deg, #38bdf8, #1e1b4b); bottom: -250px; right: -250px; animation-delay: 8s; }
 
     @keyframes orbFloat {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(100px, 150px) scale(1.1); }
+      50% { transform: translate(100px, -100px) scale(1.1); }
     }
 
     header {
@@ -85,9 +74,9 @@
       border-radius: 30px;
       margin: 0 auto 30px;
       display: block;
-      box-shadow: 0 20px 60px var(--accent-glow);
-      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(56, 189, 248, 0.4);
       animation: iconFloat 3s ease-in-out infinite;
+      border: 3px solid rgba(56, 189, 248, 0.3);
     }
 
     @keyframes iconFloat {
@@ -101,104 +90,48 @@
       border: 1px solid rgba(56, 189, 248, 0.3);
       padding: 10px 25px;
       border-radius: 50px;
-      font-size: 0.85em;
-      font-weight: 700;
-      color: var(--accent-primary);
+      font-size: 0.9em;
       margin-bottom: 30px;
-      letter-spacing: 1px;
+      color: #38bdf8;
+      letter-spacing: 2px;
     }
 
     .logo-3d {
       font-size: 5.5em;
       font-weight: 900;
-      background: linear-gradient(to bottom, #fff, var(--accent-primary));
+      background: linear-gradient(45deg, #fff, #38bdf8, #818cf8, #fff);
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
+      animation: gradientShift 4s ease infinite;
+      letter-spacing: 8px;
     }
 
-    .hero-subtitle {
-      font-size: 1.8em;
-      font-weight: 600;
-      margin: 20px auto;
-      max-width: 800px;
-      color: #fff;
-    }
+    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-    .hero-description {
-      font-size: 1.1em;
-      color: var(--text-dim);
-      max-width: 700px;
-      margin: 20px auto 40px;
-      line-height: 1.8;
-    }
+    .hero-subtitle { font-size: 1.8em; font-weight: 300; margin: 20px auto; max-width: 800px; color: #e2e8f0; }
+    .hero-description { font-size: 1.1em; color: #94a3b8; max-width: 700px; margin: 20px auto 40px; line-height: 1.8; }
 
-    /* MODERN PLAY STORE BUTTON */
-    .cta-wrapper {
-      margin-top: 50px;
-    }
-
-    .google-play-btn {
+    /* OFFICIAL PLAY STORE BUTTON */
+    .play-store-badge {
       display: inline-flex;
       align-items: center;
       background: #000;
-      border: 1px solid #333;
-      padding: 12px 28px;
-      border-radius: 14px;
-      text-decoration: none;
       color: #fff;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      padding: 10px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid #334155;
+      transition: 0.3s;
     }
 
-    .google-play-btn:hover {
-      transform: translateY(-5px);
-      background: #0a0a0a;
-      border-color: var(--accent-primary);
-      box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
-    }
+    .play-store-badge:hover { transform: translateY(-5px); border-color: #38bdf8; background: #0f172a; }
+    .play-store-badge svg { width: 32px; height: 32px; margin-right: 12px; }
+    .play-badge-text { display: flex; flex-direction: column; text-align: left; line-height: 1.2; }
+    .play-badge-text .small { font-size: 10px; font-weight: 500; }
+    .play-badge-text .big { font-size: 20px; font-weight: 600; }
 
-    .google-play-btn svg {
-      width: 32px;
-      height: 32px;
-      margin-right: 12px;
-    }
-
-    .play-text {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      line-height: 1.2;
-    }
-
-    .play-get-it {
-      font-size: 10px;
-      text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .play-store-name {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .rating-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 15px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 12px 30px;
-      border-radius: 50px;
-      margin-top: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .star { color: #fbbf24; font-size: 1.2em; }
-
-    /* Stats Section */
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -209,106 +142,159 @@
     }
 
     .stat-card {
-      background: var(--card-bg);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.1);
       padding: 35px;
       border-radius: 25px;
       text-align: center;
     }
 
-    .stat-number {
-      font-size: 2.8em;
-      font-weight: 800;
-      color: var(--accent-primary);
-      margin: 10px 0;
-    }
+    .stat-number { font-size: 2.8em; font-weight: 900; color: #38bdf8; margin: 10px 0; }
+    .stat-label { font-size: 1em; color: #94a3b8; letter-spacing: 1px; }
 
-    .stat-label { color: var(--text-dim); text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; }
-
-    /* Live Demo */
-    .live-demo { padding: 100px 20px; text-align: center; }
-    .section-title { font-size: 3.5em; font-weight: 800; margin-bottom: 20px; }
-    
-    .speed-monitor {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #0f172a;
-      border: 1px solid var(--accent-primary);
-      border-radius: 30px;
-      padding: 50px;
-      box-shadow: 0 0 50px rgba(56, 189, 248, 0.1);
-    }
-
-    .speed-value {
-      font-size: 3.5em;
-      font-weight: 800;
-      color: var(--accent-primary);
-    }
-
-    .signal-bar { width: 15px; background: var(--accent-primary); border-radius: 5px; opacity: 0.5; }
-
-    /* Features */
     .features { padding: 100px 20px; }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+      gap: 40px;
       max-width: 1300px;
       margin: 0 auto;
     }
 
     .feature-card {
-      background: var(--card-bg);
-      padding: 40px;
-      border-radius: 25px;
+      background: #0f172a;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: 0.3s;
+      padding: 45px;
+      border-radius: 25px;
+      transition: 0.4s;
     }
 
-    .feature-card:hover { border-color: var(--accent-primary); background: rgba(56, 189, 248, 0.05); }
-    .feature-icon { font-size: 3em; margin-bottom: 20px; display: block; }
-    .feature-card h3 { font-size: 1.5em; margin-bottom: 15px; color: var(--accent-primary); }
-    .feature-card p { color: var(--text-dim); line-height: 1.7; }
+    .feature-card:hover { transform: translateY(-10px); border-color: #38bdf8; }
+    .feature-card h3 { color: #38bdf8; margin: 15px 0; font-size: 1.7em; }
+    .feature-card p { color: #94a3b8; line-height: 1.8; }
+    .feature-icon { font-size: 3.5em; }
 
-    /* Screenshots Section */
-    .screenshots-section { padding: 100px 20px; overflow: hidden; }
+    .screenshots-section { padding: 100px 20px; }
     .carousel-3d-wrapper { height: 600px; perspective: 2000px; display: flex; justify-content: center; align-items: center; }
     .carousel-track { position: relative; width: 300px; height: 600px; transform-style: preserve-3d; animation: rotate3D 30s linear infinite; }
-    .screenshot-card { position: absolute; width: 300px; height: 600px; border-radius: 20px; overflow: hidden; border: 2px solid var(--accent-primary); background: #000; }
-    .screenshot-card img { width: 100%; height: 100%; object-fit: cover; }
     
     @keyframes rotate3D { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
     
+    .screenshot-card { position: absolute; width: 300px; height: 600px; border-radius: 30px; overflow: hidden; border: 3px solid rgba(56, 189, 248, 0.3); }
+    .screenshot-card img { width: 100%; height: 100%; object-fit: cover; }
     .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(450px); }
     .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(450px); }
     .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(450px); }
     .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(450px); }
 
-    /* Timeline Section */
     .timeline { max-width: 1000px; margin: 60px auto; position: relative; }
-    .timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: var(--accent-primary); transform: translateX(-50%); opacity: 0.3; }
-    .timeline-item { display: flex; margin-bottom: 50px; position: relative; }
-    .timeline-content { width: 45%; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-    .timeline-item:nth-child(odd) { justify-content: flex-start; }
-    .timeline-item:nth-child(even) { justify-content: flex-end; }
-    .timeline-dot { position: absolute; left: 50%; top: 20px; width: 20px; height: 20px; background: var(--accent-primary); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 20px var(--accent-primary); }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #38bdf8; opacity: 0.3; }
+    .timeline-item { display: flex; margin-bottom: 80px; position: relative; opacity: 0; transform: translateY(50px); transition: 0.8s; }
+    .timeline-item.active { opacity: 1; transform: translateY(0); }
+    .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
+    .timeline-content { width: 45%; background: #0f172a; padding: 35px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+    .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #38bdf8; border-radius: 50%; box-shadow: 0 0 15px #38bdf8; }
 
-    /* VPN Info */
-    .vpn-info { max-width: 900px; margin: 50px auto; padding: 40px; background: rgba(251, 191, 36, 0.05); border: 1px solid #fbbf24; border-radius: 25px; }
-    .vpn-info h3 { color: #fbbf24; margin-bottom: 10px; }
+    .vpn-info { max-width: 900px; margin: 80px auto; padding: 40px; background: rgba(245, 158, 11, 0.05); border: 1px solid #f59e0b; border-radius: 25px; }
+    .vpn-info h3 { color: #f59e0b; margin-bottom: 15px; }
 
-    /* Footer & Developer */
-    footer { padding: 100px 20px; background: #010409; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
-    .developer-card { max-width: 600px; margin: 0 auto 60px; background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
-    .developer-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent-primary); margin-bottom: 20px; }
-    .developer-name { font-size: 1.8em; font-weight: 700; color: #fff; }
+    .cta-section { padding: 100px 20px; text-align: center; }
+    .cta-content h2 { font-size: 3.5em; margin-bottom: 30px; background: linear-gradient(45deg, #fff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* IMPROVED DEVELOPER CARD */
+    .developer-card {
+      max-width: 550px;
+      margin: 0 auto 50px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.9));
+      padding: 50px 40px;
+      border-radius: 40px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .developer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+    }
+
+    .developer-avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      margin: 0 auto 25px;
+      display: block;
+      padding: 5px;
+      background: linear-gradient(45deg, #38bdf8, #818cf8);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+    }
+
+    .developer-name { font-size: 2.2em; font-weight: 800; color: #fff; margin-bottom: 5px; letter-spacing: -1px; }
+    .developer-title { color: #38bdf8; font-weight: 600; text-transform: uppercase; font-size: 0.85em; letter-spacing: 2px; margin-bottom: 20px; }
+    .developer-bio { color: #94a3b8; font-size: 1em; line-height: 1.7; margin-bottom: 25px; }
+
+    .dev-stats-mini {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 25px;
+    }
+    .dev-stat-item b { display: block; font-size: 1.4em; color: #fff; }
+    .dev-stat-item span { font-size: 0.75em; color: #64748b; text-transform: uppercase; }
+
+    /* IMPROVED SOCIAL ICONS */
+    .social-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .social-link {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .social-link img { width: 28px; height: 28px; transition: 0.3s; z-index: 2; }
+
+    .social-link::after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 18px;
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 1;
+    }
+
+    /* Brand Colors on Hover */
+    .link-mail:hover::after { background: #64748b; opacity: 0.2; }
+    .link-mail:hover { border-color: #64748b; transform: translateY(-8px); }
     
-    .social-icon { width: 60px; height: 60px; background: #111; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 10px; transition: 0.3s; cursor: pointer; border: 1px solid #333; }
-    .social-icon:hover { border-color: var(--accent-primary); transform: translateY(-5px); }
-    .social-icon img { width: 30px; }
+    .link-tele:hover::after { background: #0088cc; opacity: 0.2; }
+    .link-tele:hover { border-color: #0088cc; transform: translateY(-8px); }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+    .link-insta:hover::after { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); opacity: 0.2; }
+    .link-insta:hover { border-color: #cc2366; transform: translateY(-8px); }
+
+    .social-link:hover img { transform: scale(1.2); filter: brightness(1.2); }
+
+    footer { padding: 80px 20px; background: #010409; text-align: center; border-top: 1px solid #0f172a; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: 0.8s; }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
@@ -317,6 +303,7 @@
       .timeline-dot { left: 20px; }
       .timeline-content { width: 85%; margin-left: 50px; }
       .timeline-item:nth-child(even) { justify-content: flex-start; }
+      .developer-card { padding: 40px 20px; }
     }
   </style>
 </head>
@@ -328,158 +315,131 @@
 <div class="orb orb-2"></div>
 
 <header>
-  <img src="icon.png" alt="App Icon" class="app-icon">
-  <div class="hero-badge">🚀 #1 INTERNET MONITOR</div>
+  <img src="icon.png" alt="BitVelo Icon" class="app-icon">
+  <div class="hero-badge">🚀 #1 INTERNET MONITOR APP</div>
   <h1 class="logo-3d">BitVelo</h1>
-  <p class="hero-subtitle">Monitor Speed & Data Usage in Real-Time</p>
-  <p class="hero-description">Experience full control of your network with BitVelo. Track per-app usage, set daily limits, and see live speeds in your status bar.</p>
+  <p class="hero-subtitle">Monitor Real-Time Speed & Per-App Data</p>
+  <p class="hero-description">Experience full control of your network. Track data usage, block apps, and view live speeds in your status bar with BitVelo.</p>
 
-  <div class="cta-wrapper">
-    <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="google-play-btn" target="_blank">
-        <svg viewBox="0 0 512 512">
-            <path fill="#4db6ac" d="M12 52.12v407.76c0 15.11 11.59 23.01 23.32 23.01 4.54 0 9.17-1.18 13.41-3.61l355.74-203.88c11.01-6.31 17.53-17.51 17.53-30.4s-6.52-24.09-17.53-30.4L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01z"/>
-            <path fill="#000" opacity=".1" d="M12 52.12v407.76c0 5.48 1.52 10.19 4.22 13.91l247.78-217.79L12 52.12z"/>
-            <path fill="#fff" opacity=".1" d="M411.07 225.12L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01 0 1.25.09 2.48.25 3.69.83-13.1 11.48-19.7 23.07-19.7 4.54 0 9.17 1.18 13.41 3.61l362.34 207.65c5.5 3.15 8.76 8.75 8.76 15.2s-3.26 12.05-8.76 15.2l-5.4 3.09c5.5-3.15 8.76-8.75 8.76-15.2s-3.26-12.05-8.76-15.2z"/>
-        </svg>
-        <div class="play-text">
-            <span class="play-get-it">Get it on</span>
-            <span class="play-store-name">Google Play</span>
-        </div>
-    </a>
-  </div>
+  <a class="play-store-badge" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
+    <svg viewBox="0 0 512 512"><path fill="#4db6ac" d="M12 52.12v407.76c0 15.11 11.59 23.01 23.32 23.01 4.54 0 9.17-1.18 13.41-3.61l355.74-203.88c11.01-6.31 17.53-17.51 17.53-30.4s-6.52-24.09-17.53-30.4L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01z"/><path fill="#000" opacity=".1" d="M12 52.12v407.76c0 5.48 1.52 10.19 4.22 13.91l247.78-217.79L12 52.12z"/><path fill="#fff" opacity=".1" d="M411.07 225.12L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01 0 1.25.09 2.48.25 3.69.83-13.1 11.48-19.7 23.07-19.7 4.54 0 9.17 1.18 13.41 3.61l362.34 207.65c5.5 3.15 8.76 8.75 8.76 15.2s-3.26 12.05-8.76 15.2l-5.4 3.09c5.5-3.15 8.76-8.75 8.76-15.2s-3.26-12.05-8.76-15.2z"/></svg>
+    <div class="play-badge-text"><span class="small">GET IT ON</span><span class="big">Google Play</span></div>
+  </a>
 
-  <div class="rating-badge">
-    <div class="stars">★★★★★</div>
-    <span style="font-weight: 700;">4.6/5 Rating</span>
-  </div>
+  <div style="margin-top: 30px; display: flex; justify-content: center; gap: 10px; color: #fbbf24; font-weight: 700;">★★★★★ <span style="color:#94a3b8">4.6/5 Rating</span></div>
 </header>
 
-<section class="stats reveal">
-  <div class="stat-card">
-    <div class="stat-number" data-target="700000">0</div>
-    <div class="stat-label">Downloads</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number" data-target="16000">0</div>
-    <div class="stat-label">Active Users</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number" data-target="4.6">0</div>
-    <div class="stat-label">Avg Rating</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number" data-target="150">0</div>
-    <div class="stat-label">Countries</div>
-  </div>
-</section>
-
-<section class="live-demo reveal">
-  <h2 class="section-title">⚡ Live Performance</h2>
-  <div class="speed-monitor">
-    <div class="speed-value" id="downloadSpeed">0.0</div>
-    <p class="stat-label">Mbps Download</p>
-    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
-        <div><div id="uploadSpeed" style="color: #fff; font-weight: bold;">0.0</div><div class="stat-label">Upload</div></div>
-        <div><div id="ping" style="color: #fff; font-weight: bold;">0</div><div class="stat-label">Ping</div></div>
-    </div>
-  </div>
+<section class="stats">
+  <div class="stat-card"><div class="stat-number" data-target="700000">0</div><div class="stat-label">Downloads</div></div>
+  <div class="stat-card"><div class="stat-number" data-target="16000">0</div><div class="stat-label">Active Users</div></div>
+  <div class="stat-card"><div class="stat-number" data-target="4.6">0</div><div class="stat-label">Rating</div></div>
+  <div class="stat-card"><div class="stat-number" data-target="150">0</div><div class="stat-label">Countries</div></div>
 </section>
 
 <section class="features reveal" id="features">
-  <h2 class="section-title" style="text-align: center;">🎯 Powerful Features</h2>
+  <h2 style="text-align: center; font-size: 3em; margin-bottom: 50px;">🎯 Powerful Features</h2>
   <div class="features-grid">
-    <div class="feature-card"><span class="feature-icon">📊</span><h3>Real-Time Speed</h3><p>Monitor live download & upload speed on your status bar.</p></div>
-    <div class="feature-card"><span class="feature-icon">📱</span><h3>Per-App Tracking</h3><p>See exactly how much data each app uses in real-time.</p></div>
-    <div class="feature-card"><span class="feature-icon">📈</span><h3>Usage History</h3><p>Analyze daily and monthly data usage with detailed charts.</p></div>
-    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Floating Window</h3><p>Overlay current speeds over any app you are using.</p></div>
-    <div class="feature-card"><span class="feature-icon">🚫</span><h3>App Blocking</h3><p>Block background internet usage for specific apps.</p></div>
-    <div class="feature-card"><span class="feature-icon">⚙️</span><h3>Daily Limits</h3><p>Set data caps and get notified before you exceed them.</p></div>
-    <div class="feature-card"><span class="feature-icon">📶</span><h3>All Networks</h3><p>Works with WiFi, 4G, 5G and all mobile connections.</p></div>
-    <div class="feature-card"><span class="feature-icon">🔍</span><h3>Bandwidth Detective</h3><p>Find hidden apps eating your data in the background.</p></div>
-    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Lightweight</h3><p>Optimized for minimal battery and RAM consumption.</p></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><h3>Status Monitor</h3><p>View live speeds in your status bar and floating window instantly.</p></div>
+    <div class="feature-card"><div class="feature-icon">📱</div><h3>Per-App Data</h3><p>See exactly how much data each app is consuming in real-time.</p></div>
+    <div class="feature-card"><div class="feature-icon">🚫</div><h3>Network Blocker</h3><p>Block specific apps from accessing the internet to save data.</p></div>
+    <div class="feature-card"><div class="feature-icon">📈</div><h3>Usage History</h3><p>Detailed reports of your daily and monthly mobile/WiFi usage.</p></div>
+    <div class="feature-card"><div class="feature-icon">⚙️</div><h3>Data Limits</h3><p>Set custom daily limits and get alerts before you hit your cap.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔋</div><h3>Battery Friendly</h3><p>Lightweight design that won't drain your phone's resources.</p></div>
   </div>
 </section>
 
-<section class="screenshots-section reveal" id="screenshots">
-    <h2 class="section-title" style="text-align: center;">📸 App Preview</h2>
-    <div class="carousel-3d-wrapper">
-      <div class="carousel-track">
-        <div class="screenshot-card"><img src="screenshots/0.png" alt="Screen 1"></div>
-        <div class="screenshot-card"><img src="screenshots/1.png" alt="Screen 2"></div>
-        <div class="screenshot-card"><img src="screenshots/2.png" alt="Screen 3"></div>
-        <div class="screenshot-card"><img src="screenshots/3.png" alt="Screen 4"></div>
-      </div>
+<section class="screenshots-section reveal">
+  <h2 style="text-align: center; font-size: 3em; margin-bottom: 50px;">📸 App Interface</h2>
+  <div class="carousel-3d-wrapper">
+    <div class="carousel-track">
+      <div class="screenshot-card"><img src="screenshots/0.png" alt="1"></div>
+      <div class="screenshot-card"><img src="screenshots/1.png" alt="2"></div>
+      <div class="screenshot-card"><img src="screenshots/2.png" alt="3"></div>
+      <div class="screenshot-card"><img src="screenshots/3.png" alt="4"></div>
     </div>
+  </div>
 </section>
 
-<section class="how-it-works reveal" id="how-it-works">
-    <h2 class="section-title" style="text-align: center;">🔧 Setup Process</h2>
-    <div class="timeline">
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>01. Install</h3><p>Get BitVelo from the Google Play Store for free.</p></div></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>02. Permission</h3><p>Grant VPN access for on-device traffic monitoring.</p></div></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>03. Configure</h3><p>Set your data limits and select apps to track.</p></div></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>04. Monitor</h3><p>View your live speeds and usage history instantly.</p></div></div>
-    </div>
+<section class="how-it-works reveal">
+  <h2 style="text-align: center; font-size: 3em; margin-bottom: 50px;">🔧 Setup</h2>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>01. Download</h3><p>Install BitVelo from the Play Store for free.</p></div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>02. Permission</h3><p>Grant VPN access for on-device traffic filtering.</p></div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h3>03. Start</h3><p>Monitor your speed and data usage in real-time.</p></div></div>
+  </div>
 </section>
 
 <section class="reveal">
-    <div class="vpn-info">
-      <h3>🔒 Privacy Information</h3>
-      <p>BitVelo uses Android VPNService to route traffic locally. No data is ever sent to external servers. All processing is done strictly on your device.</p>
-    </div>
+  <div class="vpn-info">
+    <h3>🔒 Privacy First</h3>
+    <p>BitVelo routes traffic locally on your device for monitoring. <b>No data is ever sent to external servers</b>.</p>
+  </div>
+</section>
+
+<section class="cta-section reveal">
+  <div class="cta-content">
+    <h2>Ready to optimize your data?</h2>
+    <a class="play-store-badge" href="#" target="_blank" style="margin-top: 20px;">
+      <svg viewBox="0 0 512 512"><path fill="#4db6ac" d="M12 52.12v407.76c0 15.11 11.59 23.01 23.32 23.01 4.54 0 9.17-1.18 13.41-3.61l355.74-203.88c11.01-6.31 17.53-17.51 17.53-30.4s-6.52-24.09-17.53-30.4L48.73 32.72c-4.24-2.43-8.87-3.61-13.41-3.61-11.73 0-23.32 7.9-23.32 23.01z"/></svg>
+      <div class="play-badge-text"><span class="small">GET IT ON</span><span class="big">Google Play</span></div>
+    </a>
+  </div>
 </section>
 
 <footer>
   <div class="developer-card reveal">
-    <img src="developer.jpg" alt="Developer" class="developer-avatar">
+    <img src="developer.jpg" alt="Mohammad Azizi" class="developer-avatar">
     <div class="developer-name">Mohammad Azizi</div>
-    <p style="color: var(--accent-primary); margin-bottom: 10px;">UI/UX Designer & Android Dev</p>
-    <p style="color: var(--text-dim); padding: 0 20px;">Dedicated to building lightweight tools that give users full transparency over their mobile devices.</p>
+    <div class="developer-title">Android UI/UX Developer</div>
+    <p class="developer-bio">Passionate about building utility tools that give users full transparency and control over their mobile experience.</p>
+    
+    <div class="dev-stats-mini">
+      <div class="dev-stat-item"><b>5+</b><span>Exp. Years</span></div>
+      <div class="dev-stat-item"><b>10+</b><span>Apps</span></div>
+      <div class="dev-stat-item"><b>1M+</b><span>Total Users</span></div>
+    </div>
   </div>
 
-  <div class="social-icons">
-    <div class="social-icon" onclick="window.location.href='mailto:mazizi7171@gmail.com'"><img src="https://img.icons8.com/fluency/48/000000/email-open.png"></div>
-    <div class="social-icon" onclick="window.open('https://t.me/Azizi_1231')"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></div>
-    <div class="social-icon" onclick="window.open('https://instagram.com/mohammad876886')"><img src="https://img.icons8.com/color/48/000000/instagram-new.png"></div>
+  <div class="social-wrapper">
+    <div class="social-link link-mail" onclick="window.location.href='mailto:mazizi7171@gmail.com'">
+      <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email">
+    </div>
+    <div class="social-link link-tele" onclick="window.open('https://t.me/Azizi_1231')">
+      <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram">
+    </div>
+    <div class="social-link link-insta" onclick="window.open('https://instagram.com/mohammad876886')">
+      <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram">
+    </div>
   </div>
-  <p style="margin-top: 40px; opacity: 0.5;">© 2024 BitVelo • Created by Mohammad Azizi</p>
+
+  <p style="margin-top: 50px; color: #475569; font-size: 0.9em;">© 2024 BitVelo App. All rights reserved.</p>
 </footer>
 
 <script>
 function createMatrix() {
   const matrix = document.getElementById('matrix');
-  for (let i = 0; i < 30; i++) {
-    const column = document.createElement('div');
-    column.className = 'matrix-column';
-    column.style.left = Math.random() * 100 + '%';
-    column.style.animationDuration = (Math.random() * 3 + 5) + 's';
-    column.innerText = '0101010101010101010101010';
-    matrix.appendChild(column);
+  for (let i = 0; i < 35; i++) {
+    const col = document.createElement('div');
+    col.className = 'matrix-column';
+    col.style.left = Math.random() * 100 + '%';
+    col.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    col.innerHTML = '101010101010101010'.split('').join('<br>');
+    matrix.appendChild(col);
   }
-}
-
-function animateSpeed() {
-  setInterval(() => {
-    document.getElementById('downloadSpeed').textContent = (Math.random() * 80 + 20).toFixed(1);
-    document.getElementById('uploadSpeed').textContent = (Math.random() * 40 + 5).toFixed(1);
-    document.getElementById('ping').textContent = Math.floor(Math.random() * 40 + 10);
-  }, 2000);
 }
 
 function animateCounters() {
   const counters = document.querySelectorAll('.stat-number');
   counters.forEach(counter => {
     const target = parseFloat(counter.getAttribute('data-target'));
-    const increment = target / 50;
-    let current = 0;
+    const increment = target / 80;
+    let curr = 0;
     const update = () => {
-      if (current < target) {
-        current += increment;
-        counter.textContent = Math.floor(current).toLocaleString() + (target > 1000 ? '+' : '');
-        setTimeout(update, 30);
-      } else {
-        counter.textContent = target.toLocaleString() + (target > 1000 ? '+' : '');
-      }
+      if (curr < target) {
+        curr += increment;
+        counter.innerText = Math.floor(curr).toLocaleString() + (target > 10 ? '+' : '');
+        setTimeout(update, 20);
+      } else { counter.innerText = target.toLocaleString() + (target > 10 ? '+' : ''); }
     };
     update();
   });
@@ -487,19 +447,13 @@ function animateCounters() {
 
 function reveal() {
   const reveals = document.querySelectorAll('.reveal');
-  reveals.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
-    if (elementTop < window.innerHeight - 100) el.classList.add('active');
-  });
+  const items = document.querySelectorAll('.timeline-item');
+  reveals.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active'); });
+  items.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active'); });
 }
 
+window.addEventListener('load', () => { createMatrix(); animateCounters(); reveal(); });
 window.addEventListener('scroll', reveal);
-window.addEventListener('load', () => {
-  createMatrix();
-  animateSpeed();
-  animateCounters();
-  reveal();
-});
 </script>
 
 </body>
