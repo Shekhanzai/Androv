@@ -2,354 +2,877 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BitVelo | Next-Gen Network Monitor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BitVelo - Realtime Internet Data Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #00f2ff;
-      --secondary: #0061ff;
-      --accent: #ff007a;
-      --bg: #050505;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.1);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: white;
+      font-family: 'Poppins', sans-serif;
+      background: #0a0e27;
+      color: #fff;
       overflow-x: hidden;
-      perspective: 1000px;
+      position: relative;
     }
 
-    /* Animated Mesh Background */
-    .mesh-bg {
+    /* Animated Background Particles */
+    .particle-container {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1;
-      background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050505 100%);
+      overflow: hidden;
     }
 
-    .blob {
+    .particle {
       position: absolute;
-      width: 500px; height: 500px;
-      background: linear-gradient(var(--primary), var(--secondary));
-      filter: blur(80px);
+      width: 3px;
+      height: 3px;
+      background: rgba(0, 255, 255, 0.6);
       border-radius: 50%;
-      opacity: 0.2;
-      animation: float 20s infinite alternate;
+      animation: float 15s infinite;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
     }
 
     @keyframes float {
-      from { transform: translate(-10%, -10%) rotate(0deg); }
-      to { transform: translate(20%, 20%) rotate(360deg); }
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+      }
     }
 
-    /* Hero Section */
-    .hero {
-      height: 100vh;
+    /* Glowing Orbs Background */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: orbFloat 20s infinite ease-in-out;
+      z-index: -1;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(45deg, #ff006e, #8338ec);
+      top: -250px;
+      left: -250px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(45deg, #3a86ff, #06ffa5);
+      bottom: -200px;
+      right: -200px;
+      animation-delay: 5s;
+    }
+
+    .orb-3 {
+      width: 350px;
+      height: 350px;
+      background: linear-gradient(45deg, #ffbe0b, #fb5607);
+      top: 50%;
+      left: 50%;
+      animation-delay: 10s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(100px, -100px) scale(1.1);
+      }
+      66% {
+        transform: translate(-100px, 100px) scale(0.9);
+      }
+    }
+
+    /* Header Section with 3D Effect */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 120px 20px 80px;
+      perspective: 1000px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      transform-style: preserve-3d;
+      animation: heroEntry 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes heroEntry {
+      from {
+        opacity: 0;
+        transform: translateY(-100px) rotateX(90deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+      }
+    }
+
+    .logo-3d {
+      font-size: 5em;
+      font-weight: 900;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff88);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 3s ease infinite, float3D 3s ease-in-out infinite;
+      text-shadow: 0 10px 30px rgba(0, 245, 255, 0.5);
+      letter-spacing: 5px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo-3d::before {
+      content: 'BitVelo';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(45deg, #ff00ff, #00f5ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: blur(20px);
+      opacity: 0.7;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float3D {
+      0%, 100% {
+        transform: translateY(0px) rotateX(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotateX(5deg);
+      }
+    }
+
+    .subtitle {
+      font-size: 1.5em;
+      font-weight: 300;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeInUp 1s 0.5s forwards;
+      letter-spacing: 2px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Futuristic Download Button */
+    .download-wrapper {
+      margin-top: 50px;
+      opacity: 0;
+      animation: fadeInUp 1s 1s forwards;
+    }
+
+    .download-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 18px 45px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2em;
+      text-decoration: none;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+      transition: all 0.4s ease;
+      border: 2px solid transparent;
+    }
+
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .download-btn:hover::before {
+      left: 100%;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+      border-color: #00f5ff;
+    }
+
+    .download-btn img {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Glassmorphism Stats Cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+      opacity: 0;
+      animation: fadeInUp 1s 1.5s forwards;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s;
+    }
+
+    .stat-card:hover::before {
+      top: -100%;
+      left: -100%;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+      border-color: rgba(0, 245, 255, 0.5);
+    }
+
+    .stat-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      animation: rotateIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes rotateIcon {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(10deg) scale(1.1); }
+    }
+
+    .stat-number {
+      font-size: 2.5em;
+      font-weight: 900;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      margin-top: 10px;
+      font-size: 1em;
+      opacity: 0.8;
+      font-weight: 300;
+    }
+
+    /* 3D Carousel Screenshots */
+    .screenshots-section {
+      padding: 100px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screenshots-section h2 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 60px;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 1s forwards;
+    }
+
+    .carousel-3d {
+      position: relative;
+      height: 500px;
+      perspective: 1500px;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 20px;
     }
 
-    .hero h1 {
-      font-family: 'Syncopate', sans-serif;
-      font-size: clamp(3rem, 10vw, 8rem);
-      line-height: 0.9;
-      text-transform: uppercase;
-      background: linear-gradient(to bottom, #fff 30%, var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      letter-spacing: -5px;
-      animation: titleReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      opacity: 0.6;
-      margin-bottom: 40px;
-    }
-
-    /* 3D Floating Phone Mockup */
-    .phone-showcase {
+    .carousel-track {
       position: relative;
+      width: 300px;
+      height: 550px;
+      transform-style: preserve-3d;
+      animation: rotate3D 25s linear infinite;
+    }
+
+    @keyframes rotate3D {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    .screenshot-card {
+      position: absolute;
       width: 280px;
-      height: 580px;
-      background: #111;
-      border: 8px solid #222;
-      border-radius: 40px;
-      box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 30px var(--secondary);
-      transform: rotateY(-20deg) rotateX(10deg);
-      transition: 0.5s;
+      height: 550px;
+      left: 10px;
+      top: 0;
+      background: #fff;
+      border-radius: 25px;
       overflow: hidden;
-      margin-bottom: -100px;
-      z-index: 10;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s;
     }
 
-    .phone-showcase:hover {
-      transform: rotateY(0deg) rotateX(0deg) scale(1.05);
-    }
-
-    .phone-showcase img {
+    .screenshot-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    /* Creative Stats Grid */
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 100px 10% 50px;
-      width: 100%;
+    .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(400px); }
+    .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(400px); }
+    .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(400px); }
+    .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(400px); }
+
+    .screenshot-card:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 30px 80px rgba(0, 245, 255, 0.6);
     }
 
-    .stat-card {
-      background: var(--glass);
-      backdrop-filter: blur(15px);
-      border: 1px solid var(--glass-border);
-      padding: 40px;
-      border-radius: 30px;
+    /* Features with Hover Effects */
+    .features {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    .features h2 {
       text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 3em;
+      margin-bottom: 60px;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .stat-card:hover {
-      background: rgba(255, 255, 255, 0.07);
-      transform: translateY(-15px);
-      border-color: var(--primary);
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .stat-card h2 {
-      font-size: 3rem;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-
-    /* Magnetic Download Button */
-    .btn-wrap {
-      padding: 50px;
-      perspective: 1000px;
-    }
-
-    .dl-button {
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
-      padding: 25px 60px;
-      background: white;
-      color: black;
-      text-decoration: none;
-      font-weight: 800;
-      border-radius: 100px;
-      font-size: 1.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 15px;
-      transition: 0.3s;
       overflow: hidden;
+      cursor: pointer;
     }
 
-    .dl-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 50px var(--primary);
-    }
-
-    .dl-button::before {
+    .feature-card::before {
       content: '';
       position: absolute;
-      top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-      transition: 0.5s;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(255, 0, 255, 0.1));
+      opacity: 0;
+      transition: opacity 0.5s;
     }
 
-    .dl-button:hover::before {
-      left: 100%;
+    .feature-card:hover::before {
+      opacity: 1;
     }
 
-    /* Scrolling Screenshot Track */
-    .track-container {
-      padding: 100px 0;
-      background: rgba(255,255,255,0.02);
-      overflow: hidden;
-      white-space: nowrap;
+    .feature-card:hover {
+      transform: translateY(-20px) rotateX(10deg);
+      box-shadow: 0 30px 80px rgba(0, 245, 255, 0.4);
+      border-color: rgba(0, 245, 255, 0.5);
     }
 
-    .track {
+    .feature-icon {
+      font-size: 4em;
+      margin-bottom: 20px;
       display: inline-block;
-      animation: scrollTrack 30s linear infinite;
+      transition: all 0.5s;
+      filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.5));
     }
 
-    .track img {
-      width: 250px;
-      border-radius: 20px;
-      margin: 0 30px;
-      filter: grayscale(0.5);
-      transition: 0.5s;
+    .feature-card:hover .feature-icon {
+      transform: scale(1.2) rotate(10deg);
+      filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.8));
     }
 
-    .track img:hover {
-      filter: grayscale(0);
-      transform: scale(1.1) rotate(5deg);
+    .feature-card h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      color: #00f5ff;
     }
 
-    @keyframes scrollTrack {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    .feature-card p {
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-content h2 {
+      font-size: 3.5em;
+      margin-bottom: 30px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 20px rgba(0, 245, 255, 0.5), 0 0 30px rgba(0, 245, 255, 0.3);
+      }
+      to {
+        text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.5);
+      }
+    }
+
+    .cta-content p {
+      font-size: 1.3em;
+      margin-bottom: 40px;
+      opacity: 0.9;
     }
 
     /* Footer */
     footer {
-      padding: 100px 5%;
-      border-top: 1px solid var(--glass-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 30px;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .social-links { display: flex; gap: 20px; }
-    
-    .social-btn {
-      width: 60px; height: 60px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .social-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: 0.3s;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
     }
 
-    .social-btn:hover {
-      background: var(--primary);
-      transform: rotate(15deg);
+    .social-icon::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #00f5ff, #ff00ff);
+      transform: translate(-50%, -50%);
+      transition: all 0.5s;
     }
 
-    .social-btn img { filter: invert(1); width: 25px; }
+    .social-icon:hover::before {
+      width: 100%;
+      height: 100%;
+    }
 
-    /* Reveal Animation */
+    .social-icon img {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.4s;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-10px) scale(1.1);
+      border-color: #00f5ff;
+      box-shadow: 0 10px 30px rgba(0, 245, 255, 0.5);
+    }
+
+    .social-icon:hover img {
+      transform: rotate(360deg);
+      filter: brightness(1.3);
+    }
+
+    /* Rating Badge */
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 15px 30px;
+      border-radius: 50px;
+      margin-top: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeInUp 1s 1.2s forwards;
+      opacity: 0;
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+    }
+
+    .star {
+      color: #ffd700;
+      font-size: 1.2em;
+      animation: starPulse 2s infinite;
+    }
+
+    .star:nth-child(1) { animation-delay: 0s; }
+    .star:nth-child(2) { animation-delay: 0.2s; }
+    .star:nth-child(3) { animation-delay: 0.4s; }
+    .star:nth-child(4) { animation-delay: 0.6s; }
+    .star:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes starPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); filter: drop-shadow(0 0 5px #ffd700); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo-3d {
+        font-size: 3em;
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+      }
+
+      .stat-number {
+        font-size: 2em;
+      }
+
+      .carousel-3d {
+        height: 400px;
+      }
+
+      .carousel-track {
+        width: 200px;
+        height: 400px;
+      }
+
+      .screenshot-card {
+        width: 180px;
+        height: 400px;
+      }
+
+      .screenshot-card:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
+      .screenshot-card:nth-child(2) { transform: rotateY(90deg) translateZ(250px); }
+      .screenshot-card:nth-child(3) { transform: rotateY(180deg) translateZ(250px); }
+      .screenshot-card:nth-child(4) { transform: rotateY(270deg) translateZ(250px); }
+
+      .cta-content h2 {
+        font-size: 2em;
+      }
+
+      .features h2,
+      .screenshots-section h2 {
+        font-size: 2em;
+      }
+    }
+
+    /* Scroll Reveal Animation */
     .reveal {
       opacity: 0;
       transform: translateY(50px);
-      transition: 1s all ease;
+      transition: all 0.8s ease;
     }
 
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
-
-    @keyframes titleReveal {
-      from { clip-path: inset(0 0 100% 0); transform: translateY(100px); }
-      to { clip-path: inset(0 0 0 0); transform: translateY(0); }
-    }
   </style>
 </head>
+
 <body>
 
-  <div class="mesh-bg">
-    <div class="blob"></div>
-  </div>
+<!-- Animated Background -->
+<div class="particle-container" id="particles"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-  <section class="hero">
-    <p class="reveal">Experience Real-Time Precision</p>
-    <h1>BITVELO</h1>
+<!-- Header -->
+<header>
+  <div class="hero-content">
+    <h1 class="logo-3d">BitVelo</h1>
+    <p class="subtitle">⚡ Realtime Internet Speed Monitor</p>
     
-    <div class="phone-showcase">
-      <!-- Replace with your actual app home screenshot -->
-      <img src="screenshots/0.png" alt="App Preview">
-    </div>
-
-    <div class="btn-wrap reveal">
-      <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="dl-button">
-        <img src="https://img.icons8.com/material-sharp/24/000000/google-play.png" alt="Play Icon">
-        GET THE APP
+    <div class="download-wrapper">
+      <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store">
+        <span>Download Now</span>
       </a>
     </div>
-  </section>
 
-  <section class="stats-container">
-    <div class="stat-card reveal">
-      <h2>700K+</h2>
-      <p>Global Installations</p>
+    <div class="rating-badge">
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <span style="font-weight: 700; font-size: 1.1em;">4.6/5</span>
     </div>
-    <div class="stat-card reveal" style="transition-delay: 0.2s;">
-      <h2>4.6</h2>
-      <p>Star Rating</p>
-    </div>
-    <div class="stat-card reveal" style="transition-delay: 0.4s;">
-      <h2>16K+</h2>
-      <p>Active Every Day</p>
-    </div>
-  </section>
+  </div>
+</header>
 
-  <div class="track-container">
-    <div class="track">
-      <img src="screenshots/1.png" alt="Screen">
-      <img src="screenshots/2.png" alt="Screen">
-      <img src="screenshots/3.png" alt="Screen">
-      <img src="screenshots/0.png" alt="Screen">
-      <!-- Duplicate for infinite loop -->
-      <img src="screenshots/1.png" alt="Screen">
-      <img src="screenshots/2.png" alt="Screen">
-      <img src="screenshots/3.png" alt="Screen">
-      <img src="screenshots/0.png" alt="Screen">
+<!-- Stats -->
+<section class="stats">
+  <div class="stat-card">
+    <div class="stat-icon">📥</div>
+    <div class="stat-number">700K+</div>
+    <div class="stat-label">Total Downloads</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-number">16K+</div>
+    <div class="stat-label">Daily Active Users</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⭐</div>
+    <div class="stat-number">4.6</div>
+    <div class="stat-label">Average Rating</div>
+  </div>
+</section>
+
+<!-- 3D Screenshots Carousel -->
+<section class="screenshots-section reveal">
+  <h2>📱 Experience BitVelo</h2>
+  <div class="carousel-3d">
+    <div class="carousel-track">
+      <div class="screenshot-card">
+        <img src="screenshots/0.png" alt="Screenshot 1">
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/1.png" alt="Screenshot 2">
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/2.png" alt="Screenshot 3">
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/3.png" alt="Screenshot 4">
+      </div>
+    </div>
+  </div>
+  <p style="text-align: center; margin-top: 30px; opacity: 0.7;">Hover to pause rotation</p>
+</section>
+
+<!-- Features -->
+<section class="features reveal">
+  <h2>🚀 Powerful Features</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Real-Time Monitoring</h3>
+      <p>Track your internet speed with live updates and beautiful visualizations</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💾</div>
+      <h3>Data Usage Tracker</h3>
+      <p>Monitor daily, weekly, and monthly data consumption effortlessly</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3>Beautiful UI</h3>
+      <p>Clean, modern, and intuitive interface designed for ease of use</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Lightweight & Fast</h3>
+      <p>Minimal battery and resource usage for optimal performance</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <h3>Detailed Analytics</h3>
+      <p>Get comprehensive insights with charts and graphs</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Smart Notifications</h3>
+      <p>Stay informed with customizable alerts and warnings</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section reveal">
+  <div class="cta-content">
+    <h2>Ready to Take Control?</h2>
+    <p>Join thousands of users who trust BitVelo for monitoring their internet speed</p>
+    <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
+      <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store">
+      <span>Get Started Free</span>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p style="font-size: 1.2em; margin-bottom: 10px;">Developed with ❤️ by <strong>Mohammad</strong></p>
+  <p style="opacity: 0.7;">Making internet monitoring simple and beautiful</p>
+  
+  <div class="social-icons">
+    <div class="social-icon" onclick="contactEmail()">
+      <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email">
+    </div>
+    <div class="social-icon" onclick="openTelegram()">
+      <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram">
+    </div>
+    <div class="social-icon" onclick="openInstagram()">
+      <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram">
     </div>
   </div>
 
-  <section class="hero" style="height: 60vh;">
-    <h2 class="reveal" style="font-family: 'Syncopate'; font-size: 3rem;">Minimal Design.<br>Powerful Data.</h2>
-  </section>
+  <p style="margin-top: 40px; opacity: 0.5; font-size: 0.9em;">© 2024 BitVelo. All rights reserved.</p>
+</footer>
 
-  <footer>
-    <div>
-      <h3 style="font-family: 'Syncopate';">BitVelo</h3>
-      <p style="opacity: 0.5;">Crafted with passion by Mohammad</p>
-    </div>
+<script>
+// Create floating particles
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 15 + 's';
+    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    container.appendChild(particle);
+  }
+}
+
+// Scroll reveal animation
+function reveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(element => {
+    const windowHeight = window.innerHeight;
+    const elementTop = element.getBoundingClientRect().top;
+    const elementVisible = 150;
     
-    <div class="social-links">
-      <a href="mailto:mazizi7171@gmail.com" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/mail.png" alt="Email"></a>
-      <a href="https://t.me/Azizi_1231" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" alt="Telegram"></a>
-      <a href="https://instagram.com/mohammad876886" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png" alt="Instagram"></a>
-    </div>
-  </footer>
-
-  <script>
-    // Reveal animation on scroll
-    function reveal() {
-      var reveals = document.querySelectorAll(".reveal");
-      for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150;
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add("active");
-        }
-      }
+    if (elementTop < windowHeight - elementVisible) {
+      element.classList.add('active');
     }
+  });
+}
 
-    window.addEventListener("scroll", reveal);
-    reveal(); // Run once on load
+// Social Functions
+function contactEmail() {
+  window.location.href = "mailto:mazizi7171@gmail.com";
+}
 
-    // Mouse Parallax effect for the phone
-    document.addEventListener('mousemove', (e) => {
-      const phone = document.querySelector('.phone-showcase');
-      const x = (window.innerWidth / 2 - e.pageX) / 25;
-      const y = (window.innerHeight / 2 - e.pageY) / 25;
-      phone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-    });
-  </script>
+function openTelegram() {
+  window.open("https://t.me/Azizi_1231", "_blank");
+}
+
+function openInstagram() {
+  window.open("https://instagram.com/mohammad876886", "_blank");
+}
+
+// Initialize
+window.addEventListener('load', createParticles);
+window.addEventListener('scroll', reveal);
+reveal(); // Initial check
+</script>
+
 </body>
 </html>
