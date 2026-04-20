@@ -2,255 +2,354 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BitVelo - Realtime Internet Data Monitor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BitVelo | Next-Gen Network Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --primary: #00f2ff;
+      --secondary: #0061ff;
+      --accent: #ff007a;
+      --bg: #050505;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: white;
       overflow-x: hidden;
-      animation: fadeInBody 1.5s ease;
+      perspective: 1000px;
     }
 
-    header {
+    /* Animated Mesh Background */
+    .mesh-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050505 100%);
+    }
+
+    .blob {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: linear-gradient(var(--primary), var(--secondary));
+      filter: blur(80px);
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: float 20s infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translate(-10%, -10%) rotate(0deg); }
+      to { transform: translate(20%, 20%) rotate(360deg); }
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 70px 20px 40px;
-      background: linear-gradient(135deg, #1d2671, #c33764);
-      animation: slideDown 1.5s ease;
+      padding: 20px;
     }
 
-    header h1 {
-      font-size: 3em;
-      margin: 0;
-      animation: popUp 1s ease;
+    .hero h1 {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(3rem, 10vw, 8rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      background: linear-gradient(to bottom, #fff 30%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      letter-spacing: -5px;
+      animation: titleReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1);
     }
 
-    header p {
-      margin-top: 10px;
-      font-size: 1.3em;
-      opacity: 0.9;
-      animation: popUp 1.5s ease;
+    .hero p {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 40px;
     }
 
-    .download-btn {
-      margin-top: 25px;
+    /* 3D Floating Phone Mockup */
+    .phone-showcase {
+      position: relative;
+      width: 280px;
+      height: 580px;
+      background: #111;
+      border: 8px solid #222;
+      border-radius: 40px;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 30px var(--secondary);
+      transform: rotateY(-20deg) rotateX(10deg);
+      transition: 0.5s;
+      overflow: hidden;
+      margin-bottom: -100px;
+      z-index: 10;
+    }
+
+    .phone-showcase:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+    }
+
+    .phone-showcase img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Creative Stats Grid */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 100px 10% 50px;
+      width: 100%;
+    }
+
+    .stat-card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      padding: 40px;
+      border-radius: 30px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .stat-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-15px);
+      border-color: var(--primary);
+    }
+
+    .stat-card h2 {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    /* Magnetic Download Button */
+    .btn-wrap {
+      padding: 50px;
+      perspective: 1000px;
+    }
+
+    .dl-button {
+      position: relative;
+      padding: 25px 60px;
+      background: white;
+      color: black;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 100px;
+      font-size: 1.2rem;
       display: inline-flex;
       align-items: center;
-      background: #00c853;
-      color: #fff;
-      padding: 12px 25px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1.1em;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.3s;
-      animation: fadeIn 2s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      gap: 15px;
+      transition: 0.3s;
+      overflow: hidden;
     }
 
-    .download-btn img {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
+    .dl-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 50px var(--primary);
     }
 
-    .download-btn:hover {
-      background: #00b248;
-      transform: scale(1.05);
+    .dl-button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      transition: 0.5s;
     }
 
-    .rating {
-      margin-top: 15px;
-      font-size: 1.1em;
-      opacity: 0.9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      animation: fadeIn 2.2s ease;
+    .dl-button:hover::before {
+      left: 100%;
     }
 
-    .rating img {
-      width: 22px;
-      height: 22px;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 40px;
-      gap: 40px;
-      font-size: 1.2em;
-      animation: fadeIn 2.5s ease;
-    }
-
-    .stat-item {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(5px);
-    }
-
-    .screenshots-container {
-      overflow-x: auto;
+    /* Scrolling Screenshot Track */
+    .track-container {
+      padding: 100px 0;
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
       white-space: nowrap;
-      padding: 30px 10px;
-      margin: 60px 0;
-      background: #1b2735;
-      color: #fff;
-      scroll-behavior: smooth;
     }
 
-    .screenshots-container::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .screenshots-container::-webkit-scrollbar-thumb {
-      background: #00c6ff;
-      border-radius: 10px;
-    }
-
-    .screenshots-container img {
+    .track {
       display: inline-block;
-      max-width: 250px;
-      margin: 0 15px;
+      animation: scrollTrack 30s linear infinite;
+    }
+
+    .track img {
+      width: 250px;
       border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.4s, box-shadow 0.4s;
-      background: white;
-      padding: 5px;
+      margin: 0 30px;
+      filter: grayscale(0.5);
+      transition: 0.5s;
     }
 
-    .screenshots-container img:hover {
-      transform: scale(1.08);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    .track img:hover {
+      filter: grayscale(0);
+      transform: scale(1.1) rotate(5deg);
     }
 
-    .info {
-      text-align: center;
-      padding: 50px 20px;
-      background: linear-gradient(to right, #11998e, #38ef7d);
-      color: #fff;
-      font-size: 1.2em;
+    @keyframes scrollTrack {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
-    .info h2 {
-      margin-bottom: 20px;
-    }
-
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: linear-gradient(to right, #7b2ff7, #f107a3);
-      font-size: 1em;
-      margin-top: 40px;
+      padding: 100px 5%;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
     }
 
-    .social-icons {
-      margin-top: 20px;
-    }
-
-    .social-icons img {
-      width: 40px;
-      margin: 0 12px;
-      cursor: pointer;
-      transition: transform 0.3s, opacity 0.3s;
+    .social-links { display: flex; gap: 20px; }
+    
+    .social-btn {
+      width: 60px; height: 60px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       border-radius: 50%;
-      background: white;
-      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
     }
 
-    .social-icons img:hover {
-      transform: scale(1.2);
-      opacity: 0.8;
+    .social-btn:hover {
+      background: var(--primary);
+      transform: rotate(15deg);
     }
 
-    /* Animations */
-    @keyframes fadeInBody {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .social-btn img { filter: invert(1); width: 25px; }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: 1s all ease;
     }
 
-    @keyframes popUp {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @keyframes slideDown {
-      from { transform: translateY(-100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    @keyframes titleReveal {
+      from { clip-path: inset(0 0 100% 0); transform: translateY(100px); }
+      to { clip-path: inset(0 0 0 0); transform: translateY(0); }
     }
   </style>
 </head>
-
 <body>
-<header>
-  <h1>Bitvelo - Network Speed</h1>
-  <p>Realtime Internet Data Monitor</p>
-  <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" target="_blank">
-    <img src="https://img.icons8.com/color/48/000000/google-play.png" alt="Play Store Icon">
-    Download
-  </a>
-  
-  <div class="rating">
-    <img src="https://img.icons8.com/emoji/48/000000/star-emoji.png" alt="Star">
-    4.6/5 Rating
+
+  <div class="mesh-bg">
+    <div class="blob"></div>
   </div>
 
-  <div class="stats">
-    <div class="stat-item">
-      <strong>700K+</strong><br>Total Downloads
+  <section class="hero">
+    <p class="reveal">Experience Real-Time Precision</p>
+    <h1>BITVELO</h1>
+    
+    <div class="phone-showcase">
+      <!-- Replace with your actual app home screenshot -->
+      <img src="screenshots/0.png" alt="App Preview">
     </div>
-    <div class="stat-item">
-      <strong>16K+</strong><br>Daily Active Users
+
+    <div class="btn-wrap reveal">
+      <a href="https://play.google.com/store/apps/details?id=com.AFG.internetspeedmeter" class="dl-button">
+        <img src="https://img.icons8.com/material-sharp/24/000000/google-play.png" alt="Play Icon">
+        GET THE APP
+      </a>
+    </div>
+  </section>
+
+  <section class="stats-container">
+    <div class="stat-card reveal">
+      <h2>700K+</h2>
+      <p>Global Installations</p>
+    </div>
+    <div class="stat-card reveal" style="transition-delay: 0.2s;">
+      <h2>4.6</h2>
+      <p>Star Rating</p>
+    </div>
+    <div class="stat-card reveal" style="transition-delay: 0.4s;">
+      <h2>16K+</h2>
+      <p>Active Every Day</p>
+    </div>
+  </section>
+
+  <div class="track-container">
+    <div class="track">
+      <img src="screenshots/1.png" alt="Screen">
+      <img src="screenshots/2.png" alt="Screen">
+      <img src="screenshots/3.png" alt="Screen">
+      <img src="screenshots/0.png" alt="Screen">
+      <!-- Duplicate for infinite loop -->
+      <img src="screenshots/1.png" alt="Screen">
+      <img src="screenshots/2.png" alt="Screen">
+      <img src="screenshots/3.png" alt="Screen">
+      <img src="screenshots/0.png" alt="Screen">
     </div>
   </div>
-</header>
 
-<section class="screenshots-container">
-  <img src="screenshots/0.png" alt="App Screenshot 1">
-  <img src="screenshots/1.png" alt="App Screenshot 2">
-  <img src="screenshots/2.png" alt="App Screenshot 3">
-  <img src="screenshots/3.png" alt="App Screenshot 4">
-</section>
+  <section class="hero" style="height: 60vh;">
+    <h2 class="reveal" style="font-family: 'Syncopate'; font-size: 3rem;">Minimal Design.<br>Powerful Data.</h2>
+  </section>
 
-<section class="info">
-  <h2>About Bitvelo</h2>
-  <p>Bitvelo helps you monitor your internet speed and data usage in real-time with beautiful visuals and easy-to-understand analytics. Stay informed and take control of your data consumption effortlessly!</p>
-</section>
+  <footer>
+    <div>
+      <h3 style="font-family: 'Syncopate';">BitVelo</h3>
+      <p style="opacity: 0.5;">Crafted with passion by Mohammad</p>
+    </div>
+    
+    <div class="social-links">
+      <a href="mailto:mazizi7171@gmail.com" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/mail.png" alt="Email"></a>
+      <a href="https://t.me/Azizi_1231" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" alt="Telegram"></a>
+      <a href="https://instagram.com/mohammad876886" class="social-btn"><img src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png" alt="Instagram"></a>
+    </div>
+  </footer>
 
-<footer>
-  <p>Developed by Mohammad</p>
-  <div class="social-icons">
-    <img src="https://img.icons8.com/fluency/48/000000/email-open.png" alt="Email" onclick="contactEmail()">
-    <img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png" alt="Telegram" onclick="openTelegram()">
-    <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram" onclick="openInstagram()">
-  </div>
-</footer>
+  <script>
+    // Reveal animation on scroll
+    function reveal() {
+      var reveals = document.querySelectorAll(".reveal");
+      for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        var elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add("active");
+        }
+      }
+    }
 
-<script>
-function contactEmail() {
-  window.location.href = "mailto:mazizi7171@gmail.com";
-}
+    window.addEventListener("scroll", reveal);
+    reveal(); // Run once on load
 
-function openTelegram() {
-  window.open("https://t.me/Azizi_1231", "_blank");
-}
-
-function openInstagram() {
-  window.open("https://instagram.com/mohammad876886", "_blank");
-}
-</script>
-
+    // Mouse Parallax effect for the phone
+    document.addEventListener('mousemove', (e) => {
+      const phone = document.querySelector('.phone-showcase');
+      const x = (window.innerWidth / 2 - e.pageX) / 25;
+      const y = (window.innerHeight / 2 - e.pageY) / 25;
+      phone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+  </script>
 </body>
 </html>
